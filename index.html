@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Shubham Sharma — The Learner Becoming The Builder. An interactive story-driven portfolio experience." />
+  <title>Shubham Sharma | The Learner Becoming The Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body data-loading>
+  <!-- Floating dust particles -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- Fullscreen menu overlay -->
+  <nav class="menu-overlay" id="menu-overlay" aria-hidden="true">
+    <button class="menu-close" id="menu-close" type="button" aria-label="Close menu">
+      <span></span>
+      <span></span>
+    </button>
+    <div class="menu-inner">
+      <div class="menu-chapters">
+        <a href="#chapter-1" class="menu-link">
+          <span class="menu-num">01</span>
+          <span class="menu-title">The Learner</span>
+        </a>
+        <a href="#journey" class="menu-link">
+          <span class="menu-num">02</span>
+          <span class="menu-title">The Journey</span>
+        </a>
+        <a href="#chapter-3" class="menu-link">
+          <span class="menu-num">03</span>
+          <span class="menu-title">The Builder</span>
+        </a>
+        <a href="#chapter-4" class="menu-link">
+          <span class="menu-num">04</span>
+          <span class="menu-title">The Toolbox</span>
+        </a>
+        <a href="#chapter-5" class="menu-link">
+          <span class="menu-num">05</span>
+          <span class="menu-title">The Next Chapter</span>
+        </a>
+      </div>
+      <div class="menu-social">
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:shubham@example.com">Email</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="experience">
+    <!-- ═══════════════════════════════════ -->
+    <!-- CHAPTER I : THE LEARNER            -->
+    <!-- ═══════════════════════════════════ -->
+    <!-- Chapter I wrapper for sticky scroll-driven transition -->
+    <div class="ch1-wrapper" id="chapter-1">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="grain" aria-hidden="true"></div>
+        <div class="ambient ambient-left" aria-hidden="true"></div>
+        <div class="ambient ambient-right" aria-hidden="true"></div>
+
+        <header class="topline anim-entry" data-delay="300">
+          <button class="menu-button" id="menu-toggle" type="button" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+            <b>Menu</b>
+          </button>
+        </header>
+
+        <div class="name-art" aria-hidden="true">
+          <div class="name-left-col anim-entry" data-delay="700">
+            <span class="name-left">Shubham</span>
+            <div class="manifesto-left">
+              <span class="manifesto-sub">Computer Science Student</span>
+              <p class="manifesto-body">
+                Curious by nature. Disciplined by choice.<br />
+                <span>Turning ideas into products through code, design and data.</span>
+              </p>
+            </div>
+          </div>
+          <span class="name-right anim-entry" data-delay="800">Sharma</span>
+        </div>
+
+        <div class="portrait-stage" data-portrait-stage>
+          <div class="golden-arc" aria-hidden="true"></div>
+          <img class="portrait portrait-base anim-entry" data-delay="500" src="photo4.png"
+            alt="Cinematic portrait of Shubham Sharma" />
+          <img class="portrait portrait-reveal" src="photo8.png" alt="" aria-hidden="true" />
+          <div class="reveal-aura" aria-hidden="true"></div>
+        </div>
+
+        <!-- Cinematic text threshold bridge -->
+        <div class="cinematic-bridge" aria-hidden="true">
+          <p class="bridge-text">
+            “Curiosity came first. Everything else followed.”
+          </p>
+        </div>
+
+        <div class="chapter-mark anim-entry" data-delay="1000">
+          <p>Chapter I</p>
+          <h1 id="hero-title">
+            <span class="title-learner">The Learner</span>
+            <span class="title-builder">The Builder</span>
+          </h1>
+        </div>
+
+        <div class="side-index anim-entry" data-delay="1200" aria-hidden="true">
+          <span>01</span>
+          <i></i>
+          <span>05</span>
+        </div>
+
+        <a class="scroll-cue anim-entry" data-delay="1400" href="#journey" aria-label="Scroll to begin the journey">
+          <span>Begin the journey</span>
+          <i></i>
+        </a>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CHAPTER II : THE JOURNEY           -->
+    <!-- ═══════════════════════════════════ -->
+    <section class="next-scene" id="journey" aria-labelledby="journey-title">
+      <p>Chapter II</p>
+      <h2 id="journey-title">The Journey</h2>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

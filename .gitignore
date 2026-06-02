@@ -1,0 +1,15 @@
+# OS files
+.DS_Store
+
+# Project planning, blueprints, and Figma documents
+*.docx
+*.pdf
+Screenshot*.png
+
+# Unused portraits and raw backups (to keep git history light)
+photo2.png
+photo5.png
+photo6.png
+photo7.png
+photo9.png
+*backup.png
