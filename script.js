@@ -111,6 +111,7 @@
   const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
   function setTargetFromEvent(event) {
+    if (document.body.hasAttribute("data-test-registration")) return;
     const rect = stage.getBoundingClientRect();
     const x = (event.touches ? event.touches[0].clientX : event.clientX) - rect.left;
     const y = (event.touches ? event.touches[0].clientY : event.clientY) - rect.top;
@@ -199,7 +200,49 @@
   /* ────────────────────────────────────────────────
      5. MAIN ANIMATION LOOP (portrait + parallax + title)
      ──────────────────────────────────────────────── */
+  /* ────────────────────────────────────────────────
+     4.5 DYNAMIC EYE COORDINATES
+     ──────────────────────────────────────────────── */
+  function updateEyeCoordinates() {
+    if (!stage) return { eyeX: 0, eyeY: 0 };
+    const rect = stage.getBoundingClientRect();
+    const containerAspectRatio = rect.width / rect.height;
+    const imageAspectRatio = 1672 / 941;
+    const xEyePct = 0.4418;
+    const yEyePct = 0.285;
+
+    let eyeX = 0;
+    let eyeY = 0;
+
+    if (containerAspectRatio > imageAspectRatio) {
+      // Container is wider than the image (cropped vertically, scaled by width)
+      const scaledHeight = rect.width / imageAspectRatio;
+      const yOffset = (rect.height - scaledHeight) / 2;
+      eyeX = xEyePct * rect.width;
+      eyeY = yOffset + yEyePct * scaledHeight;
+    } else {
+      // Container is taller than the image (cropped horizontally, scaled by height)
+      const scaledWidth = rect.height * imageAspectRatio;
+      const xOffset = (rect.width - scaledWidth) / 2;
+      eyeX = xOffset + xEyePct * scaledWidth;
+      eyeY = yEyePct * rect.height;
+    }
+
+    const s = stage.style;
+    s.setProperty("--eye-x", `${eyeX}px`);
+    s.setProperty("--eye-y", `${eyeY}px`);
+    return { eyeX, eyeY };
+  }
+
+  /* ────────────────────────────────────────────────
+     5. MAIN ANIMATION LOOP (portrait + parallax + title)
+     ──────────────────────────────────────────────── */
   function animateReveal() {
+    if (document.body.hasAttribute("data-test-registration")) {
+      isLoopActive = false;
+      rafHandle = null;
+      return;
+    }
     if (stage) {
       // Lerp reveal position
       const dx = reveal.targetX - reveal.currentX;
@@ -226,13 +269,10 @@
         reveal.parallaxCurrentY += dpy * 0.08;
 
         // Correct for parallax translation and zoom scale to keep mask centered exactly under cursor
-        const rect = stage.getBoundingClientRect();
+        const { eyeX, eyeY } = updateEyeCoordinates();
         const revealScale = 1.05 * currentScrollScale;
-        const originX = rect.width * 0.5;
-        const originY = rect.height * 0.33; // Centered at 33% vertical origin for the eyes
-        const shiftX = rect.width * 0.035; // 3.5% horizontal shift to match CSS transform
-        const maskX = originX + (reveal.currentX - shiftX - originX - reveal.parallaxCurrentX) / revealScale;
-        const maskY = originY + (reveal.currentY - originY - reveal.parallaxCurrentY) / revealScale;
+        const maskX = eyeX + (reveal.currentX - eyeX - reveal.parallaxCurrentX) / revealScale;
+        const maskY = eyeY + (reveal.currentY - eyeY - reveal.parallaxCurrentY) / revealScale;
 
         const s = stage.style;
         const safeSize = Math.max(reveal.currentSize, 0.5);
@@ -373,6 +413,7 @@
     if (!hero) return;
 
     function onScroll() {
+      if (document.body.hasAttribute("data-test-registration")) return;
       // Use window.scrollY directly to avoid layout thrashing from getBoundingClientRect
       const scrollY = window.scrollY || document.documentElement.scrollTop;
       const vh = window.innerHeight;
@@ -440,10 +481,12 @@
   function init() {
     initLenis();
     initEntryAnimation();
+    updateEyeCoordinates(); // Initialize eye coords on load
     requestRender(); // Start the state-driven render loop initially
     initParticles();
     initMenu();
     initScrollTransition();
+    window.addEventListener("resize", updateEyeCoordinates);
   }
 
   // Wait for DOM + fonts

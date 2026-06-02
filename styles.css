@@ -350,7 +350,10 @@ a {
 /* ── Portrait stage ── */
 .portrait-stage {
   position: absolute;
-  inset: -5vh -5vw -3vh;
+  top: -5vh;
+  bottom: -3vh;
+  left: -2vw;
+  right: -8vw;
   /* Balanced overscan that maintains composition aspect ratio */
   z-index: 4;
   display: grid;
@@ -408,14 +411,12 @@ a {
   height: 100%;
   max-width: none;
   object-fit: cover;
-  object-position: 50% 25%;
-  /* Lower the portrait content to restore elegant forehead/hair headroom */
   user-select: none;
   pointer-events: none;
   /* GPU Acceleration + Parallax + Scroll-driven Zoom locked exactly between base and reveal layers */
-  transform: translate(calc(var(--parallax-x) + 3.5%), var(--parallax-y)) scale(calc(1.05 * var(--ch1-scale, 1)));
-  transform-origin: 50% 33%;
-  /* Centered precisely on the eyes */
+  transform: translate(var(--parallax-x), var(--parallax-y)) scale(calc(1.05 * var(--ch1-scale, 1)));
+  transform-origin: var(--eye-x, 50%) var(--eye-y, 33%);
+  /* Dynamically centers on the eyes */
   backface-visibility: hidden;
   transform-style: preserve-3d;
   will-change: transform, opacity;
@@ -998,4 +999,25 @@ a {
     opacity: 1;
     transform: none;
   }
+}
+
+/* ═══════════════════════════════════════════
+   IMAGE REGISTRATION TEST OVERRIDES
+   ═══════════════════════════════════════════ */
+[data-test-registration] .portrait-stage {
+  cursor: default !important;
+}
+
+[data-test-registration] .portrait-base,
+[data-test-registration] .portrait-reveal {
+  opacity: 0.5 !important;
+  transform: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  transition: none !important;
+}
+
+[data-test-registration] .reveal-aura,
+[data-test-registration] .golden-arc {
+  display: none !important;
 }
