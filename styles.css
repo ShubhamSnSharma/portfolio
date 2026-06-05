@@ -3470,3 +3470,124 @@ a {
   text-transform: none;
   letter-spacing: normal;
 }
+
+/* ═══════════════════════════════════════════
+   GLOBAL RESPONSIVE OPTIMIZATION
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  /* Chapter I */
+  .name-art {
+    padding-inline: 4vw;
+  }
+  .portrait-stage {
+    width: 320px;
+  }
+  /* Chapter III */
+  .ch3-project-grid {
+    grid-template-columns: 1fr;
+  }
+  .ch3-featured-project {
+    flex-direction: column;
+  }
+  .ch3-featured-content, .ch3-featured-visual {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  body, html {
+    overflow-x: hidden;
+  }
+  
+  /* Chapter I */
+  .name-art {
+    flex-direction: column;
+    justify-content: center;
+    gap: 380px; 
+  }
+  .name-left-col, .name-right {
+    transform: none !important;
+    align-items: center;
+    text-align: center;
+    animation: none !important;
+  }
+  .manifesto-left {
+    align-items: center;
+    text-align: center;
+  }
+  .portrait-stage {
+    width: 280px;
+    margin-top: 5vh;
+  }
+  .hero-title {
+    font-size: clamp(32px, 8vw, 48px) !important;
+  }
+  
+  /* Chapter II */
+  .ch2-path-scroll-wrapper {
+    left: 5vw !important;
+    width: 90vw !important;
+  }
+  .ch2-svg-path {
+    width: 100%;
+    transform: scale(0.8) !important;
+  }
+  .ch2-floater.ch2-question:nth-child(1) { left: 10% !important; top: 30% !important; font-size: 10px !important; }
+  .ch2-floater.ch2-question:nth-child(2) { left: 50% !important; top: 45% !important; font-size: 10px !important; }
+  .ch2-floater.ch2-question:nth-child(3) { left: 10% !important; top: 60% !important; font-size: 10px !important; }
+  .ch2-floater.ch2-question:nth-child(4) { left: 50% !important; top: 75% !important; font-size: 10px !important; }
+
+  /* Chapter IV */
+  .ch4-domains-wrapper {
+    flex-direction: column;
+  }
+  .ch4-domain {
+    width: 100%;
+    transform: none !important;
+    margin-bottom: 40px;
+  }
+  
+  /* Chapter V */
+  .ch5-section {
+    padding: 120px 20px 60px;
+  }
+  .ch5-content-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  /* Chapter VI */
+  .ch6-container {
+    margin-left: 0 !important;
+    padding: 0 5vw;
+    align-items: center;
+    text-align: center;
+  }
+  .ch6-stage-1, .ch6-stage-4, .ch6-stage-5 {
+    align-items: center;
+  }
+  .ch6-signature {
+    text-align: center;
+  }
+  .ch6-action-buttons {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .name-left, .name-right {
+    font-size: clamp(36px, 10vw, 48px) !important;
+  }
+  .portrait-stage {
+    width: 240px;
+  }
+  .name-art {
+    gap: 320px;
+  }
+  
+  .ch3-section, .ch4-section, .ch5-section, .ch6-section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

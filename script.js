@@ -2337,14 +2337,17 @@
     const bg = document.querySelector(".ch6-bg");
     const revealEls = document.querySelectorAll(".ch6-reveal");
 
-    // 1. Subtle Parallax Effect (25% scroll speed)
+    // 1. Subtle Parallax Effect
     if (section && bg) {
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       window.addEventListener("scroll", () => {
+        if (prefersReducedMotion) return;
         const rect = section.getBoundingClientRect();
+        const speed = window.innerWidth <= 768 ? 0.08 : 0.25;
         // Only run parallax when Chapter 6 is in the viewport
         if (rect.top < window.innerHeight && rect.bottom > 0) {
           // Negative rect.top means we've scrolled past the top of the section
-          const yPos = -rect.top * 0.25;
+          const yPos = -rect.top * speed;
           bg.style.transform = `translate3d(0, ${yPos}px, 0)`;
         }
       }, { passive: true });
