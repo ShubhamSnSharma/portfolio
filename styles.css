@@ -663,7 +663,7 @@ a {
 .ch2-topo-bg {
   position: absolute;
   inset: -200px;
-  background-image: url("assets/images/topography_bg.png");
+  background-image: url("assets/images/bg-chapter2-journey.png");
   background-repeat: repeat;
   z-index: 0;
   pointer-events: none;
@@ -3268,7 +3268,7 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("assets/images/chapter6bg.png");
+  background-image: url("assets/images/bg-final-chapter.png");
   background-size: cover;
   background-position: center;
   /* background-attachment removed for custom JS parallax */
