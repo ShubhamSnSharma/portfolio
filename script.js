@@ -2330,6 +2330,45 @@
   }
 
   /* ────────────────────────────────────────────────
+     CHAPTER 6 : THE FINAL PAGE — Scroll Reveal
+     ──────────────────────────────────────────────── */
+  function initChapter6() {
+    const section = document.getElementById("chapter-6");
+    const bg = document.querySelector(".ch6-bg");
+    const revealEls = document.querySelectorAll(".ch6-reveal");
+
+    // 1. Subtle Parallax Effect (25% scroll speed)
+    if (section && bg) {
+      window.addEventListener("scroll", () => {
+        const rect = section.getBoundingClientRect();
+        // Only run parallax when Chapter 6 is in the viewport
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          // Negative rect.top means we've scrolled past the top of the section
+          const yPos = -rect.top * 0.25;
+          bg.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        }
+      }, { passive: true });
+    }
+
+    // 2. Scroll Reveals
+    if (!revealEls.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: "0px 0px -100px 0px" } // Reveal slightly later for dramatic effect
+    );
+
+    revealEls.forEach((el) => observer.observe(el));
+  }
+
+  /* ────────────────────────────────────────────────
      INIT EVERYTHING
      ──────────────────────────────────────────────── */
   function init() {
@@ -2345,6 +2384,7 @@
     initChapter3();
     initChapter4();
     initChapter5();
+    initChapter6();
     window.addEventListener("resize", updateEyeCoordinates);
   }
 
