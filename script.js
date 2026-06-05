@@ -2286,6 +2286,28 @@
   }
 
   /* ────────────────────────────────────────────────
+     CHAPTER 4 : THE THINKER — Scroll Reveal
+     ──────────────────────────────────────────────── */
+  function initChapter4() {
+    const revealEls = document.querySelectorAll(".ch4-reveal");
+    if (!revealEls.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    revealEls.forEach((el) => observer.observe(el));
+  }
+
+  /* ────────────────────────────────────────────────
      INIT EVERYTHING
      ──────────────────────────────────────────────── */
   function init() {
@@ -2299,6 +2321,7 @@
     initChapter2Observer();
     initTopographyJourney();
     initChapter3();
+    initChapter4();
     window.addEventListener("resize", updateEyeCoordinates);
   }
 
