@@ -2627,6 +2627,57 @@ a {
   background: linear-gradient(180deg, transparent, var(--gold), transparent);
 }
 
+/* ── The Toolbox ── */
+
+.ch4-toolbox {
+  margin-top: clamp(100px, 12vw, 180px);
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ch4-toolbox-header {
+  text-align: center;
+  margin-bottom: clamp(40px, 6vw, 60px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.ch4-toolbox-subtitle {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(24px, 3.5vw, 42px);
+  font-weight: 500;
+  color: var(--ivory);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.ch4-toolbox-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(32px, 5vw, 60px);
+  padding-top: 40px;
+  border-top: 1px solid rgba(212, 164, 77, 0.15);
+}
+
+.ch4-toolbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ch4-toolbox-group-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ivory);
+  margin: 0;
+  line-height: 1.1;
+  opacity: 0.9;
+}
+
 /* ── Currently Exploring ── */
 
 .ch4-exploring {
@@ -2701,6 +2752,13 @@ a {
 .ch4-header .ch4-reveal:nth-child(4) { transition-delay: 0.28s; }
 .ch4-header .ch4-reveal:nth-child(5) { transition-delay: 0.36s; }
 
+/* Stagger delays for the toolbox */
+.ch4-toolbox .ch4-reveal:nth-child(1) { transition-delay: 0.05s; }
+.ch4-toolbox .ch4-reveal:nth-child(2) { transition-delay: 0.12s; }
+.ch4-toolbox-group:nth-child(1) { transition-delay: 0.2s; }
+.ch4-toolbox-group:nth-child(2) { transition-delay: 0.28s; }
+.ch4-toolbox-group:nth-child(3) { transition-delay: 0.36s; }
+
 /* Stagger delays for exploring items */
 .ch4-exploring-item:nth-child(1) { transition-delay: 0.05s; }
 .ch4-exploring-item:nth-child(2) { transition-delay: 0.12s; }
@@ -2719,6 +2777,13 @@ a {
 
   .ch4-intro br {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .ch4-toolbox-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
 }
 
