@@ -663,7 +663,7 @@ a {
 .ch2-topo-bg {
   position: absolute;
   inset: -200px;
-  background-image: url("topography_bg.png");
+  background-image: url("assets/images/topography_bg.png");
   background-repeat: repeat;
   z-index: 0;
   pointer-events: none;
@@ -3268,7 +3268,7 @@ a {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('chapter6bg.png');
+  background-image: url("assets/images/chapter6bg.png");
   background-size: cover;
   background-position: center;
   /* background-attachment removed for custom JS parallax */
@@ -3319,27 +3319,11 @@ a {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 50vh;
   gap: 24px;
 }
 
-.ch6-number {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(32px, 4vw, 48px);
-  color: var(--gold);
-  font-style: italic;
-  opacity: 0.6;
-}
 
-.ch6-headline {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(40px, 6vw, 72px);
-  color: var(--ivory);
-  letter-spacing: 0.05em;
-  margin: 0;
-  font-weight: 400;
-  text-transform: uppercase;
-}
 
 /* ── Stage 2: The Journey Statement ── */
 .ch6-stage-2 {
@@ -3351,9 +3335,9 @@ a {
 
 .ch6-text-main {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(48px, 6vw, 90px);
+  font-size: clamp(32px, 4.5vw, 64px);
   color: var(--ivory);
-  line-height: 1.1;
+  line-height: 1.15;
   margin: 0;
 }
 
@@ -3474,7 +3458,6 @@ a {
   text-transform: uppercase;
   letter-spacing: 0.15em;
   margin-top: 80px;
-}
 }
 
 .ch6-sig-name {
