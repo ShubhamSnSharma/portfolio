@@ -1336,6 +1336,956 @@
   }
 
   /* ────────────────────────────────────────────────
+     8.7 CHAPTER III: THE BUILDER (EDITORIAL SHOWCASE)
+     ──────────────────────────────────────────────── */
+  function initChapter3() {
+    const listContainer = document.getElementById("project-list-container");
+    const showcaseCard = document.getElementById("project-showcase-card");
+    const glowNode = document.getElementById("active-glow-node");
+    const navContainer = document.querySelector(".ch3-index-nav");
+
+    if (!listContainer || !showcaseCard || !glowNode || !navContainer) return;
+
+    const PROJECTS_DATA = [
+      {
+        id: "internhunt",
+        number: "01",
+        groupHeader: "FLAGSHIP WORK",
+        title: "InternHunt",
+        category: "MERN • INTERNSHIP DISCOVERY",
+        badge: "Flagship Project",
+        statement: "Finding the right internship\nshouldn't feel like searching blind.",
+        description: "Students often know their skills but struggle to discover opportunities that truly match them. InternHunt bridges that gap through resume analysis, skill extraction, internship discovery, and personalized recommendations.",
+        stack: ["Python", "Streamlit", "MySQL", "Resume Parsing", "Skill Extraction", "REST APIs", "Web Scraping"],
+        buttons: [
+          { label: "LIVE APP", url: "https://internhunt.streamlit.app/", primary: true },
+          { label: "LANDING PAGE", url: "https://internhuntt.vercel.app/", primary: false },
+          { label: "GITHUB", url: "https://github.com/ShubhamSnSharma/internhunt2.0.git", primary: false, isGithub: true }
+        ],
+        visualType: "internhunt",
+        highlights: [
+          "Resume Analysis",
+          "Skill Extraction",
+          "Internship Matching",
+          "Learning Recommendations",
+          "Real-Time Opportunity Discovery"
+        ]
+      },
+      {
+        id: "crime-analytics",
+        number: "02",
+        groupHeader: "SELECTED RESEARCH & ANALYTICS",
+        title: "Crime Against Women in India",
+        subtitle: "A Decade of Trends, Judicial Outcomes & Policy Insights (2001–2010)",
+        projectType: "Data Analytics Case Study",
+        category: "Data Analytics • Public Policy Analytics • Data Visualization",
+        badge: "Research & Analytics",
+        statement: "Understanding crime is only half the challenge.\nUnderstanding what happens after a crime is reported reveals where justice slows down.",
+        description: "Analysis of 1.67M+ NCRB crime records to uncover crime trends, conviction outcomes, judicial backlog growth, and systemic pressure on India's criminal justice system using Python, statistical analysis, and data visualization.",
+        stack: ["Python", "Pandas", "NumPy", "Matplotlib", "Plotly"],
+        buttons: [
+          { label: "View Repository", url: "https://github.com/ShubhamSnSharma/Crime-Against-Women-Analysis-India", primary: true },
+          { label: "View Analysis", url: "https://github.com/ShubhamSnSharma/Crime-Against-Women-Analysis-India", primary: false }
+        ],
+        visualType: "crime",
+        useInsightCards: true,
+        metrics: [
+          { value: "1.67M+", label: "Reported Cases Analyzed" },
+          { value: "35", label: "States & Union Territories" },
+          { value: "58%", label: "Growth in Reported Crimes" },
+          { value: "70%", label: "Growth in Pending Trials" }
+        ],
+        highlights: [
+          { val: "40%", text: "Domestic violence-related offences accounted for nearly 40% of reported crimes against women." },
+          { val: "70%", text: "Pending trials increased by almost 70%, highlighting severe judicial backlog growth." }
+        ]
+      },
+      {
+        id: "air-quality",
+        number: "03",
+        title: "Air Quality Forecasting",
+        subtitle: "Evaluating Statistical & Deep Learning Models on Delhi PM2.5 Timeseries",
+        projectType: "Time Series & Deep Learning Analysis",
+        category: "Time Series Forecasting • Deep Learning • Environmental Analytics",
+        badge: "Research & Analytics",
+        statement: "Forecasting daily PM2.5 levels\nto enable proactive public health alerts.",
+        description: "Comparative analysis of Delhi PM2.5 levels using 5+ years of daily data from the CPCB. Evaluated classical statistical models (Holt-Winters, SARIMA) against deep learning (LSTM) to forecast seasonal pollution spikes and peak winter events.",
+        stack: ["Python", "TensorFlow", "Pandas", "Statsmodels", "Matplotlib"],
+        buttons: [
+          { label: "View Repository", url: "https://github.com/ShubhamSnSharma/Delhi-Air-Quality-Forecasting", primary: true },
+          { label: "View Analysis", url: "https://github.com/ShubhamSnSharma/Delhi-Air-Quality-Forecasting/blob/main/notebooks/Air_Quality_Forecasting.ipynb", primary: false }
+        ],
+        visualType: "forecast",
+        useInsightCards: true,
+        metrics: [
+          { value: "5+ Years", label: "Daily PM2.5 Records" },
+          { value: "23.41", label: "LSTM MAE Score" },
+          { value: "55%", label: "Error Reduction vs SARIMA" },
+          { value: "3", label: "Models Evaluated" }
+        ],
+        highlights: [
+          { val: "23.41", text: "Deep learning LSTM model achieved a low 23.41 MAE, outperforming classical SARIMA and Holt-Winters by over 55%." },
+          { val: "Annual", text: "Isolated strong annual seasonality, identifying winter crop burning and weather inversions as primary pollution drivers." }
+        ]
+      }
+    ];
+
+    let activeId = PROJECTS_DATA[0].id;
+    let isTransitioning = false;
+    let crimeRotationInterval = null;
+    let hoveredItemId = null;
+    let pendingActiveId = null;
+    let hoverIntentTimeout = null;
+
+    function startCrimeRotation() {
+      if (crimeRotationInterval) clearInterval(crimeRotationInterval);
+
+      let slides = document.querySelectorAll(".showcase-slide");
+      if (slides.length === 0) return;
+
+      let currentIndex = 0;
+      crimeRotationInterval = setInterval(() => {
+        slides = document.querySelectorAll(".showcase-slide");
+        if (slides.length === 0) {
+          clearInterval(crimeRotationInterval);
+          crimeRotationInterval = null;
+          return;
+        }
+
+        slides[currentIndex].classList.remove("active");
+        currentIndex = (currentIndex + 1) % slides.length;
+        slides[currentIndex].classList.add("active");
+      }, 4000);
+    }
+
+    // Generate project list items with group headers and hierarchical classes
+    let listHtml = "";
+    PROJECTS_DATA.forEach(project => {
+      if (project.groupHeader) {
+        listHtml += `<li class="ch3-index-header">${project.groupHeader}</li>`;
+      }
+      const isSupporting = project.id !== "internhunt";
+      listHtml += `
+        <li class="ch3-index-item ${isSupporting ? 'supporting-project' : 'flagship-project'}" data-id="${project.id}">
+          <span class="index-num">${project.number}</span>
+          <div class="index-meta">
+            <span class="index-title">${project.title}</span>
+            <span class="index-cat">${project.category}</span>
+          </div>
+        </li>
+      `;
+    });
+    listContainer.innerHTML = listHtml;
+
+    const items = listContainer.querySelectorAll(".ch3-index-item");
+
+    function updateActiveStates() {
+      items.forEach(item => {
+        const id = item.getAttribute("data-id");
+        if (id === activeId) {
+          item.classList.add("active");
+        } else {
+          item.classList.remove("active");
+        }
+      });
+
+      // Update sliding glow node position
+      const activeItem = listContainer.querySelector(`.ch3-index-item[data-id="${activeId}"]`);
+      if (activeItem && window.innerWidth > 1024) {
+        const navRect = navContainer.getBoundingClientRect();
+        const itemRect = activeItem.getBoundingClientRect();
+        const topPos = itemRect.top - navRect.top + (itemRect.height / 2) - 4.5;
+        glowNode.style.top = `${topPos}px`;
+        glowNode.style.opacity = "1";
+      } else {
+        glowNode.style.opacity = "0";
+      }
+    }
+
+    function renderInternHuntVisual() {
+      return `
+        <div class="visual-wrapper internhunt-visual" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box;">
+          <svg viewBox="0 0 400 250" style="width: 100%; height: 100%; max-height: 240px;">
+            <defs>
+              <filter id="ch3-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+            
+            <!-- Grid Coordinates Background -->
+            <g opacity="0.05">
+              <line x1="200" y1="10" x2="200" y2="240" stroke="var(--gold)" stroke-width="0.5" stroke-dasharray="2, 4" />
+              <line x1="10" y1="117" x2="390" y2="117" stroke="var(--gold)" stroke-width="0.5" stroke-dasharray="2, 4" />
+            </g>
+
+            <!-- Glowing Connection Paths -->
+            <path id="path-py-ml" d="M 120 42 C 170 42, 170 117, 200 117 C 230 117, 230 192, 280 192" fill="none" stroke="rgba(212, 164, 77, 0.15)" stroke-width="1" />
+            <path id="path-py-be" d="M 120 42 C 170 42, 170 117, 200 117 C 230 117, 230 92, 280 92" fill="none" stroke="rgba(212, 164, 77, 0.08)" stroke-width="0.75" />
+            <path id="path-sql-da" d="M 120 92 C 170 92, 170 117, 200 117 C 230 117, 230 142, 280 142" fill="none" stroke="rgba(212, 164, 77, 0.1)" stroke-width="0.75" />
+            <path id="path-sql-be" d="M 120 92 C 170 92, 170 117, 200 117 C 230 117, 230 92, 280 92" fill="none" stroke="rgba(212, 164, 77, 0.08)" stroke-width="0.75" />
+            <path id="path-react-fe" d="M 120 142 C 170 142, 170 117, 200 117 C 230 117, 230 42, 280 42" fill="none" stroke="rgba(212, 164, 77, 0.15)" stroke-width="1" />
+            <path id="path-ml-ml" d="M 120 192 C 170 192, 170 117, 200 117 C 230 117, 230 192, 280 192" fill="none" stroke="rgba(212, 164, 77, 0.15)" stroke-width="1.25" />
+            <path id="path-ml-da" d="M 120 192 C 170 192, 170 117, 200 117 C 230 117, 230 142, 280 142" fill="none" stroke="rgba(212, 164, 77, 0.08)" stroke-width="0.75" />
+
+            <!-- Flowing Matching Particles (traversing paths) -->
+            <circle r="3" fill="#fff" filter="url(#ch3-glow)">
+              <animateMotion dur="3.5s" repeatCount="indefinite" path="M 120 42 C 170 42, 170 117, 200 117 C 230 117, 230 192, 280 192" />
+            </circle>
+            <circle r="2.5" fill="var(--gold)" filter="url(#ch3-glow)">
+              <animateMotion dur="4.2s" begin="1s" repeatCount="indefinite" path="M 120 92 C 170 92, 170 117, 200 117 C 230 117, 230 142, 280 142" />
+            </circle>
+            <circle r="3" fill="#fff" filter="url(#ch3-glow)">
+              <animateMotion dur="3.8s" begin="0.5s" repeatCount="indefinite" path="M 120 142 C 170 142, 170 117, 200 117 C 230 117, 230 42, 280 42" />
+            </circle>
+            <circle r="3" fill="var(--gold)" filter="url(#ch3-glow)">
+              <animateMotion dur="3.2s" begin="2s" repeatCount="indefinite" path="M 120 192 C 170 192, 170 117, 200 117 C 230 117, 230 192, 280 192" />
+            </circle>
+            <circle r="2.5" fill="var(--gold)" filter="url(#ch3-glow)">
+              <animateMotion dur="4.5s" begin="1.5s" repeatCount="indefinite" path="M 120 42 C 170 42, 170 117, 200 117 C 230 117, 230 92, 280 92" />
+            </circle>
+
+            <!-- Center Recommendation Hub -->
+            <circle cx="200" cy="117" r="16" fill="#05070b" stroke="rgba(212, 164, 77, 0.3)" stroke-width="1" />
+            <circle cx="200" cy="117" r="22" fill="none" stroke="rgba(212, 164, 77, 0.1)" stroke-width="0.5" stroke-dasharray="3, 3" />
+            <circle cx="200" cy="117" r="16" fill="none" stroke="var(--gold)" stroke-width="2" filter="url(#ch3-glow)" opacity="0.5">
+              <animate attributeName="r" values="16;24;16" dur="3s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.5;0;0.5" dur="3s" repeatCount="indefinite" />
+            </circle>
+            <text x="200" y="121" font-family="Inter, sans-serif" font-size="11" fill="var(--gold)" text-anchor="middle">✦</text>
+
+            <!-- Skill Nodes (Left) -->
+            <g>
+              <rect x="30" y="30" width="90" height="24" rx="4" fill="#070a0f" stroke="rgba(245, 241, 232, 0.1)" stroke-width="0.75" />
+              <text x="75" y="45" font-family="Inter, sans-serif" font-size="9" fill="var(--quiet)" text-anchor="middle" font-weight="500">Python</text>
+
+              <rect x="30" y="80" width="90" height="24" rx="4" fill="#070a0f" stroke="rgba(245, 241, 232, 0.1)" stroke-width="0.75" />
+              <text x="75" y="95" font-family="Inter, sans-serif" font-size="9" fill="var(--quiet)" text-anchor="middle" font-weight="500">SQL</text>
+
+              <rect x="30" y="130" width="90" height="24" rx="4" fill="#070a0f" stroke="rgba(245, 241, 232, 0.1)" stroke-width="0.75" />
+              <text x="75" y="145" font-family="Inter, sans-serif" font-size="9" fill="var(--quiet)" text-anchor="middle" font-weight="500">React</text>
+
+              <rect x="30" y="180" width="90" height="24" rx="4" fill="#070a0f" stroke="rgba(245, 241, 232, 0.1)" stroke-width="0.75" />
+              <text x="75" y="195" font-family="Inter, sans-serif" font-size="8.5" fill="var(--quiet)" text-anchor="middle" font-weight="500">Machine Learning</text>
+            </g>
+
+            <!-- Opportunity Nodes (Right) -->
+            <g>
+              <rect x="280" y="30" width="100" height="24" rx="4" fill="#070a0f" stroke="rgba(212, 164, 77, 0.15)" stroke-width="0.75" />
+              <text x="330" y="45" font-family="Inter, sans-serif" font-size="8.5" fill="var(--gold)" text-anchor="middle" font-weight="600">Frontend Intern</text>
+
+              <rect x="280" y="80" width="100" height="24" rx="4" fill="#070a0f" stroke="rgba(212, 164, 77, 0.15)" stroke-width="0.75" />
+              <text x="330" y="95" font-family="Inter, sans-serif" font-size="8.5" fill="var(--gold)" text-anchor="middle" font-weight="600">Backend Intern</text>
+
+              <rect x="280" y="130" width="100" height="24" rx="4" fill="#070a0f" stroke="rgba(212, 164, 77, 0.15)" stroke-width="0.75" />
+              <text x="330" y="145" font-family="Inter, sans-serif" font-size="8.5" fill="var(--gold)" text-anchor="middle" font-weight="600">Data Analyst</text>
+
+              <rect x="280" y="180" width="100" height="24" rx="4" fill="#070a0f" stroke="rgba(212, 164, 77, 0.25)" stroke-width="0.75" />
+              <text x="330" y="195" font-family="Inter, sans-serif" font-size="8.5" fill="var(--gold)" text-anchor="middle" font-weight="600">ML Internship</text>
+            </g>
+          </svg>
+        </div>
+      `;
+    }
+
+    function renderCrimeVisual() {
+      return `
+        <div class="visual-wrapper crime-visual" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box;">
+          <svg viewBox="0 0 400 250" style="width: 100%; height: 100%; max-height: 240px;">
+            <defs>
+              <filter id="ch3-crime-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <style>
+              .trend-line {
+                fill: none;
+                opacity: 0.12;
+                stroke-width: 1.5;
+                transition: opacity 0.3s ease, stroke-width 0.3s ease, stroke 0.3s ease;
+              }
+              .insight-text {
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+              }
+              .category-btn {
+                cursor: pointer;
+                opacity: 0.55;
+                transition: opacity 0.3s ease;
+              }
+              .category-btn circle {
+                opacity: 0;
+                transition: opacity 0.3s ease;
+              }
+              .category-btn text {
+                fill: rgba(245, 241, 232, 0.75);
+                transition: fill 0.3s ease, font-weight 0.3s ease;
+              }
+
+              /* Default Active State: Domestic Violence */
+              .category-btn.dv-btn {
+                opacity: 1;
+              }
+              .category-btn.dv-btn circle {
+                opacity: 1;
+              }
+              .category-btn.dv-btn text {
+                fill: var(--gold);
+                font-weight: 600;
+              }
+              .trend-line.dv-line {
+                opacity: 0.95;
+                stroke-width: 2.5;
+                stroke: var(--gold);
+              }
+              .insight-text.dv-insight {
+                opacity: 1;
+              }
+
+              /* Dim active states when SVG is hovered */
+              svg:hover .category-btn.dv-btn {
+                opacity: 0.55;
+              }
+              svg:hover .category-btn.dv-btn circle {
+                opacity: 0;
+              }
+              svg:hover .category-btn.dv-btn text {
+                fill: rgba(245, 241, 232, 0.75);
+                font-weight: 500;
+              }
+              svg:hover .trend-line.dv-line {
+                opacity: 0.12;
+                stroke-width: 1.5;
+                stroke: rgba(245, 241, 232, 0.2);
+              }
+              svg:hover .insight-text.dv-insight {
+                opacity: 0;
+              }
+
+              /* Hover: Domestic Violence */
+              .dv-btn:hover {
+                opacity: 1 !important;
+              }
+              .dv-btn:hover circle {
+                opacity: 1 !important;
+              }
+              .dv-btn:hover text {
+                fill: var(--gold) !important;
+                font-weight: 600 !important;
+              }
+              .dv-btn:hover ~ .trend-line.dv-line {
+                opacity: 0.95 !important;
+                stroke-width: 2.5 !important;
+                stroke: var(--gold) !important;
+              }
+              .dv-btn:hover ~ .insight-text.dv-insight {
+                opacity: 1 !important;
+              }
+
+              /* Hover: Rape */
+              .rape-btn:hover {
+                opacity: 1 !important;
+              }
+              .rape-btn:hover circle {
+                opacity: 1 !important;
+              }
+              .rape-btn:hover text {
+                fill: var(--gold) !important;
+                font-weight: 600 !important;
+              }
+              .rape-btn:hover ~ .trend-line.rape-line {
+                opacity: 0.95 !important;
+                stroke-width: 2.5 !important;
+                stroke: var(--gold) !important;
+              }
+              .rape-btn:hover ~ .insight-text.rape-insight {
+                opacity: 1 !important;
+              }
+
+              /* Hover: Sexual Harassment */
+              .sh-btn:hover {
+                opacity: 1 !important;
+              }
+              .sh-btn:hover circle {
+                opacity: 1 !important;
+              }
+              .sh-btn:hover text {
+                fill: var(--gold) !important;
+                font-weight: 600 !important;
+              }
+              .sh-btn:hover ~ .trend-line.sh-line {
+                opacity: 0.95 !important;
+                stroke-width: 2.5 !important;
+                stroke: var(--gold) !important;
+              }
+              .sh-btn:hover ~ .insight-text.sh-insight {
+                opacity: 1 !important;
+              }
+
+              /* Hover: Kidnapping */
+              .kd-btn:hover {
+                opacity: 1 !important;
+              }
+              .kd-btn:hover circle {
+                opacity: 1 !important;
+              }
+              .kd-btn:hover text {
+                fill: var(--gold) !important;
+                font-weight: 600 !important;
+              }
+              .kd-btn:hover ~ .trend-line.kd-line {
+                opacity: 0.95 !important;
+                stroke-width: 2.5 !important;
+                stroke: var(--gold) !important;
+              }
+              .kd-btn:hover ~ .insight-text.kd-insight {
+                opacity: 1 !important;
+              }
+
+              /* Hover: Trafficking */
+              .tf-btn:hover {
+                opacity: 1 !important;
+              }
+              .tf-btn:hover circle {
+                opacity: 1 !important;
+              }
+              .tf-btn:hover text {
+                fill: var(--gold) !important;
+                font-weight: 600 !important;
+              }
+              .tf-btn:hover ~ .trend-line.tf-line {
+                opacity: 0.95 !important;
+                stroke-width: 2.5 !important;
+                stroke: var(--gold) !important;
+              }
+              .tf-btn:hover ~ .insight-text.tf-insight {
+                opacity: 1 !important;
+              }
+
+              /* Hover: Dowry Cases */
+              .dw-btn:hover {
+                opacity: 1 !important;
+              }
+              .dw-btn:hover circle {
+                opacity: 1 !important;
+              }
+              .dw-btn:hover text {
+                fill: var(--gold) !important;
+                font-weight: 600 !important;
+              }
+              .dw-btn:hover ~ .trend-line.dw-line {
+                opacity: 0.95 !important;
+                stroke-width: 2.5 !important;
+                stroke: var(--gold) !important;
+              }
+              .dw-btn:hover ~ .insight-text.dw-insight {
+                opacity: 1 !important;
+              }
+            </style>
+
+            <!-- Coordinate Grid lines -->
+            <g opacity="0.04" stroke="#fff" stroke-width="0.5">
+              <line x1="185" y1="25" x2="185" y2="145" />
+              <line x1="225" y1="25" x2="225" y2="145" />
+              <line x1="265" y1="25" x2="265" y2="145" />
+              <line x1="305" y1="25" x2="305" y2="145" />
+              <line x1="345" y1="25" x2="345" y2="145" />
+              <line x1="380" y1="25" x2="380" y2="145" />
+
+              <line x1="175" y1="40" x2="390" y2="40" />
+              <line x1="175" y1="70" x2="390" y2="70" />
+              <line x1="175" y1="100" x2="390" y2="100" />
+              <line x1="175" y1="130" x2="390" y2="130" />
+            </g>
+
+            <!-- Baseline axis -->
+            <line x1="175" y1="145" x2="390" y2="145" stroke="rgba(212, 164, 77, 0.15)" stroke-width="0.75" />
+            <text x="175" y="18" font-family="Inter, sans-serif" font-size="6.5" fill="var(--quiet)" opacity="0.5" letter-spacing="0.05em">DATA ANALYSIS • INCIDENTS TREND</text>
+
+            <!-- Year Labels -->
+            <g opacity="0.45" fill="var(--quiet)" font-family="Inter, sans-serif" font-size="6.5" text-anchor="middle">
+              <text x="185" y="157">2016</text>
+              <text x="225" y="157">2017</text>
+              <text x="265" y="157">2018</text>
+              <text x="305" y="157">2019</text>
+              <text x="345" y="157">2020</text>
+              <text x="380" y="157">2021</text>
+            </g>
+
+            <!-- 1. The interactive button groups (placed before target siblings in DOM order) -->
+            <g class="category-btn dv-btn">
+              <rect x="15" y="38" width="135" height="22" fill="#fff" fill-opacity="0" />
+              <circle cx="20" cy="48" r="2.5" fill="var(--gold)" />
+              <text x="30" y="51" font-family="Inter, sans-serif" font-size="8.5" font-weight="500">Domestic Violence</text>
+            </g>
+
+            <g class="category-btn rape-btn">
+              <rect x="15" y="68" width="135" height="22" fill="#fff" fill-opacity="0" />
+              <circle cx="20" cy="78" r="2.5" fill="var(--gold)" />
+              <text x="30" y="81" font-family="Inter, sans-serif" font-size="8.5" font-weight="500">Rape</text>
+            </g>
+
+            <g class="category-btn sh-btn">
+              <rect x="15" y="98" width="135" height="22" fill="#fff" fill-opacity="0" />
+              <circle cx="20" cy="108" r="2.5" fill="var(--gold)" />
+              <text x="30" y="111" font-family="Inter, sans-serif" font-size="8.5" font-weight="500">Sexual Harassment</text>
+            </g>
+
+            <g class="category-btn kd-btn">
+              <rect x="15" y="128" width="135" height="22" fill="#fff" fill-opacity="0" />
+              <circle cx="20" cy="138" r="2.5" fill="var(--gold)" />
+              <text x="30" y="141" font-family="Inter, sans-serif" font-size="8.5" font-weight="500">Kidnapping</text>
+            </g>
+
+            <g class="category-btn tf-btn">
+              <rect x="15" y="158" width="135" height="22" fill="#fff" fill-opacity="0" />
+              <circle cx="20" cy="168" r="2.5" fill="var(--gold)" />
+              <text x="30" y="171" font-family="Inter, sans-serif" font-size="8.5" font-weight="500">Trafficking</text>
+            </g>
+
+            <g class="category-btn dw-btn">
+              <rect x="15" y="188" width="135" height="22" fill="#fff" fill-opacity="0" />
+              <circle cx="20" cy="198" r="2.5" fill="var(--gold)" />
+              <text x="30" y="201" font-family="Inter, sans-serif" font-size="8.5" font-weight="500">Dowry Cases</text>
+            </g>
+
+            <!-- 2. Interactive Trend Lines -->
+            <path class="trend-line dv-line" d="M 185 55 C 205 52, 245 40, 265 42 C 285 44, 325 36, 380 35" stroke="rgba(245, 241, 232, 0.25)" />
+            <path class="trend-line rape-line" d="M 185 90 C 205 88, 245 80, 265 82 C 285 84, 325 90, 380 88" stroke="rgba(245, 241, 232, 0.25)" />
+            <path class="trend-line sh-line" d="M 185 105 C 205 100, 245 90, 265 92 C 285 94, 325 104, 380 100" stroke="rgba(245, 241, 232, 0.25)" />
+            <path class="trend-line kd-line" d="M 185 115 C 205 110, 245 100, 265 95 C 285 90, 325 82, 380 90" stroke="rgba(245, 241, 232, 0.25)" />
+            <path class="trend-line tf-line" d="M 185 135 C 205 128, 245 135, 265 132 C 285 129, 325 134, 380 128" stroke="rgba(245, 241, 232, 0.25)" />
+            <path class="trend-line dw-line" d="M 185 125 C 205 127, 245 131, 265 133 C 285 135, 325 139, 380 142" stroke="rgba(245, 241, 232, 0.25)" />
+
+            <!-- 3. Interactive Insights Container -->
+            <!-- Insight Box Border & Background -->
+            <rect x="175" y="172" width="210" height="58" rx="6" fill="rgba(212, 164, 77, 0.01)" stroke="rgba(212, 164, 77, 0.08)" stroke-width="0.75" />
+
+            <!-- Insight Text Groups -->
+            <g class="insight-text dv-insight">
+              <text x="187" y="191" font-family="Inter, sans-serif" font-size="8.5" font-weight="600" fill="var(--gold)" letter-spacing="0.04em">DOMESTIC VIOLENCE</text>
+              <text x="187" y="203" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Highest reported category during the selected period.</text>
+              <text x="187" y="213" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Represents over 30% of total recorded cases nationally.</text>
+            </g>
+
+            <g class="insight-text rape-insight">
+              <text x="187" y="191" font-family="Inter, sans-serif" font-size="8.5" font-weight="600" fill="var(--gold)" letter-spacing="0.04em">RAPE CASES</text>
+              <text x="187" y="203" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Consistent volume with minor reporting variations.</text>
+              <text x="187" y="213" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Reflects ongoing social and legal reporting awareness.</text>
+            </g>
+
+            <g class="insight-text sh-insight">
+              <text x="187" y="191" font-family="Inter, sans-serif" font-size="8.5" font-weight="600" fill="var(--gold)" letter-spacing="0.04em">SEXUAL HARASSMENT</text>
+              <text x="187" y="203" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Spikes correlate with periods of active public reforms.</text>
+              <text x="187" y="213" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Higher reporting densities observed within urban sectors.</text>
+            </g>
+
+            <g class="insight-text kd-insight">
+              <text x="187" y="191" font-family="Inter, sans-serif" font-size="8.5" font-weight="600" fill="var(--gold)" letter-spacing="0.04em">KIDNAPPING</text>
+              <text x="187" y="203" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Noticeable upward trend leading into 2019, then stabilizing.</text>
+              <text x="187" y="213" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Demographics show high concentration in minor cohorts.</text>
+            </g>
+
+            <g class="insight-text tf-insight">
+              <text x="187" y="191" font-family="Inter, sans-serif" font-size="8.5" font-weight="600" fill="var(--gold)" letter-spacing="0.04em">TRAFFICKING</text>
+              <text x="187" y="203" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Lower overall volume but significant regional concentration.</text>
+              <text x="187" y="213" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">High densities identified along border transit routes.</text>
+            </g>
+
+            <g class="insight-text dw-insight">
+              <text x="187" y="191" font-family="Inter, sans-serif" font-size="8.5" font-weight="600" fill="var(--gold)" letter-spacing="0.04em">DOWRY CASES</text>
+              <text x="187" y="203" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Slow downward trend across the 5-year observation period.</text>
+              <text x="187" y="213" font-family="Inter, sans-serif" font-size="7.5" fill="var(--quiet)" opacity="0.9">Remains persistently concentrated in specific regions.</text>
+            </g>
+          </svg>
+        </div>
+      `;
+    }
+
+    function renderForecastVisual() {
+      return `
+        <div class="visual-wrapper forecast-visual" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 10px; box-sizing: border-box;">
+          <svg viewBox="0 0 400 250" style="width: 100%; height: 100%; max-height: 240px;">
+            <defs>
+              <linearGradient id="forecast-lstm-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="rgba(212, 164, 77, 0.2)" />
+                <stop offset="85%" stop-color="rgba(212, 164, 77, 1)" />
+                <stop offset="100%" stop-color="rgba(212, 164, 77, 0.2)" />
+              </linearGradient>
+              <filter id="ch3-forecast-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <style>
+              .forecast-model-group {
+                cursor: pointer;
+                transition: opacity 0.3s ease;
+              }
+              /* Default states: LSTM is highlighted */
+              .forecast-model-group {
+                opacity: 0.75;
+              }
+              .forecast-model-group.model-lstm {
+                opacity: 1;
+              }
+              /* Interactive hover highlighting across the whole SVG */
+              svg:hover .forecast-model-group {
+                opacity: 0.22;
+              }
+              svg:hover .forecast-model-group:hover {
+                opacity: 1;
+              }
+              
+              /* Transition line thickness */
+              .forecast-model-group .model-path {
+                transition: stroke-width 0.3s ease, stroke-opacity 0.3s ease;
+              }
+              .forecast-model-group:hover .model-path {
+                stroke-width: 2.5px;
+                stroke-opacity: 1;
+              }
+              .forecast-model-group.model-lstm:hover .model-path {
+                stroke-width: 3.5px;
+                stroke-opacity: 1;
+              }
+              
+              /* Animate bar chart rows on hover */
+              .forecast-model-group rect {
+                transition: fill-opacity 0.3s ease, stroke-width 0.3s ease;
+              }
+              .forecast-model-group:hover rect {
+                fill-opacity: 1;
+              }
+            </style>
+
+            <!-- Coordinate Grid lines -->
+            <g opacity="0.02">
+              <line x1="50" y1="15" x2="50" y2="135" stroke="#fff" stroke-width="0.5" />
+              <line x1="100" y1="15" x2="100" y2="135" stroke="#fff" stroke-width="0.5" />
+              <line x1="150" y1="15" x2="150" y2="135" stroke="#fff" stroke-width="0.5" />
+              <line x1="200" y1="15" x2="200" y2="135" stroke="#fff" stroke-width="0.5" />
+              <line x1="250" y1="15" x2="250" y2="135" stroke="#fff" stroke-width="0.5" />
+              <line x1="300" y1="15" x2="300" y2="135" stroke="#fff" stroke-width="0.5" />
+              <line x1="350" y1="15" x2="350" y2="135" stroke="#fff" stroke-width="0.5" />
+
+              <line x1="20" y1="40" x2="380" y2="40" stroke="#fff" stroke-width="0.5" />
+              <line x1="20" y1="70" x2="380" y2="70" stroke="#fff" stroke-width="0.5" />
+              <line x1="20" y1="100" x2="380" y2="100" stroke="#fff" stroke-width="0.5" />
+              <line x1="20" y1="130" x2="380" y2="130" stroke="#fff" stroke-width="0.5" />
+            </g>
+
+            <!-- Timeline Partition (Now) -->
+            <line x1="180" y1="15" x2="180" y2="135" stroke="rgba(212, 164, 77, 0.25)" stroke-width="1" stroke-dasharray="2, 4" />
+            <text x="175" y="24" font-family="Inter, sans-serif" font-size="6" fill="var(--muted)" text-anchor="end" opacity="0.5">ACTUALS</text>
+            <text x="185" y="24" font-family="Inter, sans-serif" font-size="6" fill="var(--gold)" text-anchor="start" opacity="0.7" font-weight="600">FORECAST (LSTM VS COMPARISON)</text>
+
+            <!-- Historical Actual Curve (solid gray) -->
+            <path d="M 30 115 C 60 95, 80 135, 110 100 C 130 80, 160 120, 180 105" fill="none" stroke="rgba(245, 241, 232, 0.25)" stroke-width="1.5" stroke-linecap="round" />
+
+            <!-- MODEL GROUP: LSTM -->
+            <g class="forecast-model-group model-lstm">
+              <!-- Forecast Curve -->
+              <path class="model-path" d="M 180 105 C 210 95, 240 60, 270 70 C 300 80, 330 40, 370 50" fill="none" stroke="url(#forecast-lstm-grad)" stroke-width="2" stroke-linecap="round" stroke-dasharray="300">
+                <animate attributeName="stroke-dashoffset" values="300;0" dur="4s" repeatCount="indefinite" />
+              </path>
+              <circle cx="370" cy="50" r="2.5" fill="var(--gold)" filter="url(#ch3-forecast-glow)">
+                <animate attributeName="r" values="1.5;3;1.5" dur="2s" repeatCount="indefinite" />
+              </circle>
+              
+              <!-- Hover target row -->
+              <rect x="15" y="180" width="370" height="18" fill="#fff" fill-opacity="0" />
+
+              <!-- Performance metrics row -->
+              <text x="25" y="192" font-family="Inter, sans-serif" font-size="8.5" fill="var(--gold)" font-weight="600">LSTM</text>
+              <rect x="95" y="184" width="31" height="8" rx="2" fill="var(--gold)" />
+              <text x="132" y="191" font-family="Inter, sans-serif" font-size="8" fill="var(--gold)" font-weight="500">23.41</text>
+              <rect x="235" y="184" width="51" height="8" rx="2" fill="var(--gold)" />
+              <text x="292" y="191" font-family="Inter, sans-serif" font-size="8" fill="var(--gold)" font-weight="500">38.75</text>
+            </g>
+
+            <!-- MODEL GROUP: SARIMA -->
+            <g class="forecast-model-group model-sarima">
+              <!-- Forecast Curve -->
+              <path class="model-path" d="M 180 105 C 210 110, 240 85, 270 95 C 300 105, 330 75, 370 85" fill="none" stroke="rgba(245, 241, 232, 0.45)" stroke-width="1.25" stroke-dasharray="3, 3" stroke-linecap="round" />
+              
+              <!-- Hover target row -->
+              <rect x="15" y="200" width="370" height="18" fill="#fff" fill-opacity="0" />
+
+              <!-- Performance metrics row -->
+              <text x="25" y="212" font-family="Inter, sans-serif" font-size="8.5" fill="var(--ivory)" font-weight="500">SARIMA</text>
+              <rect x="95" y="204" width="70" height="8" rx="2" fill="rgba(245, 241, 232, 0.18)" />
+              <text x="171" y="211" font-family="Inter, sans-serif" font-size="8" fill="var(--ivory)">52.06</text>
+              <rect x="235" y="204" width="115" height="8" rx="2" fill="rgba(245, 241, 232, 0.18)" />
+              <text x="356" y="211" font-family="Inter, sans-serif" font-size="8" fill="var(--ivory)">86.58</text>
+            </g>
+
+            <!-- MODEL GROUP: HOLT-WINTERS -->
+            <g class="forecast-model-group model-hw">
+              <!-- Forecast Curve -->
+              <path class="model-path" d="M 180 105 C 210 120, 240 110, 270 125 C 300 120, 330 105, 370 115" fill="none" stroke="rgba(245, 241, 232, 0.35)" stroke-width="1" stroke-dasharray="1, 2" stroke-linecap="round" />
+              
+              <!-- Hover target row -->
+              <rect x="15" y="220" width="370" height="18" fill="#fff" fill-opacity="0" />
+
+              <!-- Performance metrics row -->
+              <text x="25" y="232" font-family="Inter, sans-serif" font-size="8.5" fill="var(--ivory)" font-weight="500">HOLT-WINTERS</text>
+              <rect x="95" y="224" width="95" height="8" rx="2" fill="rgba(245, 241, 232, 0.18)" />
+              <text x="196" y="231" font-family="Inter, sans-serif" font-size="8" fill="var(--ivory)">71.07</text>
+              <rect x="235" y="224" width="140" height="8" rx="2" fill="rgba(245, 241, 232, 0.18)" />
+              <text x="381" y="231" font-family="Inter, sans-serif" font-size="8" fill="var(--ivory)">105.79</text>
+            </g>
+
+            <!-- Horizontal divider line -->
+            <line x1="20" y1="148" x2="380" y2="148" stroke="rgba(212, 164, 77, 0.08)" stroke-width="0.75" stroke-dasharray="2, 2" />
+
+            <!-- Performance Evaluation Table Labels -->
+            <text x="20" y="163" font-family="Inter, sans-serif" font-size="7" font-weight="600" fill="var(--gold)" letter-spacing="0.1em" opacity="0.6">MODEL COMPARISON (ERROR MEASURES)</text>
+            <text x="95" y="174" font-family="Inter, sans-serif" font-size="6.5" font-weight="500" fill="var(--muted)" opacity="0.5">MAE (LOWER IS BETTER)</text>
+            <text x="235" y="174" font-family="Inter, sans-serif" font-size="6.5" font-weight="500" fill="var(--muted)" opacity="0.5">RMSE (LOWER IS BETTER)</text>
+
+            <!-- Atmospheric Drifting Particles (Delhi air simulation) -->
+            <circle cx="45" cy="50" r="1.2" fill="var(--gold)" opacity="0.12">
+              <animate attributeName="cx" values="45;140" dur="8s" repeatCount="indefinite" />
+              <animate attributeName="cy" values="50;40;50" dur="8s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="100" cy="90" r="1.5" fill="var(--gold)" opacity="0.15">
+              <animate attributeName="cx" values="100;190" dur="6s" repeatCount="indefinite" />
+              <animate attributeName="cy" values="90;105;90" dur="6s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="210" cy="30" r="1" fill="#fff" opacity="0.2">
+              <animate attributeName="cx" values="210;320" dur="10s" repeatCount="indefinite" />
+              <animate attributeName="cy" values="30;45;30" dur="10s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="280" cy="110" r="1.5" fill="var(--gold)" opacity="0.1">
+              <animate attributeName="cx" values="280;365" dur="7s" repeatCount="indefinite" />
+              <animate attributeName="cy" values="110;95;110" dur="7s" repeatCount="indefinite" />
+            </circle>
+          </svg>
+        </div>
+      `;
+    }
+
+    function renderShowcaseContent(projectId) {
+      const project = PROJECTS_DATA.find(p => p.id === projectId);
+      if (!project) return "";
+
+      const paragraphs = project.description.split("\n\n").map(p => `<p>${p}</p>`).join("");
+      const isVisual = project.visualType !== "none";
+
+      if (isVisual) {
+        showcaseCard.classList.remove("no-visual");
+      } else {
+        showcaseCard.classList.add("no-visual");
+      }
+
+      // Generate buttons dynamically from buttons array configuration
+      const buttonsHtml = project.buttons ? project.buttons.map(btn => {
+        const btnClass = btn.primary ? "btn-gold" : "btn-outline";
+        const icon = btn.isGithub ? `<svg class="github-icon" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="vertical-align: middle; margin-right: 6px;"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/></svg>` : "";
+        const arrow = btn.primary && !btn.isGithub ? ` <span class="arrow">↗</span>` : "";
+        return `<a href="${btn.url}" class="${btnClass}" target="_blank" rel="noopener">${icon}${btn.label}${arrow}</a>`;
+      }).join("") : "";
+
+      // Generate features/highlights dynamically
+      let highlightsHtml = "";
+      if (project.highlights) {
+        const listClass = project.useInsightCards ? "insight-cards-grid" : "highlight-list";
+        highlightsHtml = `
+          <div class="showcase-highlights ${project.useInsightCards ? 'as-insight-cards' : ''}">
+            <span class="highlight-title">${project.useInsightCards ? 'Analytical Insights' : 'Project Highlights'}</span>
+            <ul class="${listClass}">
+              ${project.highlights.map(h => {
+          if (project.useInsightCards) {
+            return `<li class="insight-card"><span class="insight-value">${h.val}</span><span class="insight-text-content">${h.text}</span></li>`;
+          }
+          return `<li class="highlight-list-item">${h}</li>`;
+        }).join("")}
+            </ul>
+          </div>
+        `;
+      }
+
+      // Generate metrics HTML if they exist
+      let metricsHtml = "";
+      if (project.metrics) {
+        metricsHtml = `
+          <div class="showcase-metrics-grid">
+            ${project.metrics.map(m => `
+              <div class="metric-card">
+                <span class="metric-value">${m.value}</span>
+                <span class="metric-label">${m.label}</span>
+              </div>
+            `).join("")}
+          </div>
+        `;
+      }
+
+      let visualHtml = "";
+      if (project.visualType === "internhunt") {
+        visualHtml = renderInternHuntVisual();
+      } else if (project.visualType === "crime") {
+        visualHtml = renderCrimeVisual();
+      } else if (project.visualType === "forecast") {
+        visualHtml = renderForecastVisual();
+      }
+
+      return `
+        <div class="showcase-top-row ${isVisual ? '' : 'no-visual'}">
+          <div class="showcase-statement-area">
+            <span class="showcase-badge">✦ ${project.badge} ${project.projectType ? `• ${project.projectType}` : ''}</span>
+            <h3 class="showcase-statement">${project.statement.replace(/\n/g, "<br>")}</h3>
+            ${project.subtitle ? `<h4 class="showcase-subtitle">${project.subtitle}</h4>` : ''}
+          </div>
+          ${isVisual ? `
+            <div class="showcase-visual-area">
+              ${visualHtml}
+            </div>
+          ` : ""}
+        </div>
+        <div class="showcase-middle-row ${project.metrics ? 'has-metrics' : ''}">
+          ${metricsHtml}
+          <div class="showcase-desc">
+            ${paragraphs}
+          </div>
+        </div>
+        <div class="showcase-bottom-row">
+          <div class="showcase-bottom-left">
+            ${highlightsHtml}
+          </div>
+          <div class="showcase-bottom-right">
+            <div class="showcase-tech">
+              <span class="font-tiny highlight-gold">TECH STACK</span>
+              <div class="tech-pills">
+                ${project.stack.map(tech => `<span class="tech-pill">${tech}</span>`).join("")}
+              </div>
+            </div>
+            <div class="showcase-buttons">
+              ${buttonsHtml}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function triggerProjectSwitch(id) {
+      if (isTransitioning) return;
+      if (activeId === id) return;
+
+      activeId = id;
+      updateActiveStates();
+      swapShowcase(id);
+    }
+
+    function swapShowcase(projectId) {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      if (crimeRotationInterval) {
+        clearInterval(crimeRotationInterval);
+        crimeRotationInterval = null;
+      }
+
+      showcaseCard.classList.add("transitioning");
+
+      setTimeout(() => {
+        showcaseCard.innerHTML = renderShowcaseContent(projectId);
+        showcaseCard.classList.remove("transitioning");
+        isTransitioning = false;
+
+        if (projectId === "crime-analytics") {
+          startCrimeRotation();
+        }
+
+        // After transition completes, check if the user is hovering over another project
+        if (hoveredItemId && hoveredItemId !== activeId) {
+          triggerProjectSwitch(hoveredItemId);
+        }
+      }, 300);
+    }
+
+    // Set initial showcase content
+    showcaseCard.innerHTML = renderShowcaseContent(activeId);
+    updateActiveStates();
+    if (activeId === "crime-analytics") {
+      startCrimeRotation();
+    }
+
+    // Event Listeners for project items
+    items.forEach(item => {
+      const id = item.getAttribute("data-id");
+
+      item.addEventListener("mouseenter", () => {
+        hoveredItemId = id;
+
+        // If the item entered is already active, do nothing
+        if (id === activeId) {
+          if (hoverIntentTimeout) {
+            clearTimeout(hoverIntentTimeout);
+            hoverIntentTimeout = null;
+          }
+          pendingActiveId = null;
+          return;
+        }
+
+        // If this item is already pending active, do nothing
+        if (id === pendingActiveId) return;
+
+        // Clear any previous hover intent timer
+        if (hoverIntentTimeout) {
+          clearTimeout(hoverIntentTimeout);
+        }
+
+        pendingActiveId = id;
+        hoverIntentTimeout = setTimeout(() => {
+          pendingActiveId = null;
+          triggerProjectSwitch(id);
+        }, 120); // 120ms delay to prevent accidental activations
+      });
+
+      item.addEventListener("mouseleave", () => {
+        if (hoveredItemId === id) {
+          hoveredItemId = null;
+        }
+        if (pendingActiveId === id) {
+          if (hoverIntentTimeout) {
+            clearTimeout(hoverIntentTimeout);
+            hoverIntentTimeout = null;
+          }
+          pendingActiveId = null;
+        }
+      });
+
+      item.addEventListener("click", () => {
+        // Clicks bypass the hover intent timeout and switch immediately
+        if (hoverIntentTimeout) {
+          clearTimeout(hoverIntentTimeout);
+          hoverIntentTimeout = null;
+        }
+        pendingActiveId = null;
+        triggerProjectSwitch(id);
+      });
+    });
+
+    window.addEventListener("resize", () => {
+      setTimeout(updateActiveStates, 50);
+    });
+  }
+
+  /* ────────────────────────────────────────────────
      INIT EVERYTHING
      ──────────────────────────────────────────────── */
   function init() {
@@ -1348,6 +2298,7 @@
     initScrollTransition();
     initChapter2Observer();
     initTopographyJourney();
+    initChapter3();
     window.addEventListener("resize", updateEyeCoordinates);
   }
 

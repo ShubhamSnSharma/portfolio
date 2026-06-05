@@ -225,120 +225,41 @@
   <!-- ═══════════════════════════════════ -->
   <div id="chapter-3-section" class="ch3-wrapper">
     <div class="grain" aria-hidden="true"></div>
-    <section class="ch3-container" aria-labelledby="ch3-title">
-      <header class="ch3-header">
-        <span class="font-tiny">Chapter III</span>
-        <h2 id="ch3-title" class="font-massive">The Builder</h2>
-      </header>
+    <div class="ch3-layout-grid">
+      <!-- LEFT PANEL: PROJECT INDEX -->
+      <aside class="ch3-left-panel">
+        <header class="ch3-header-editorial">
+          <span class="font-small highlight-gold">Chapter III</span>
+          <h2 class="font-large text-white">The Builder</h2>
+          <span class="font-tiny highlight-gold">The Work</span>
+        </header>
 
-      <!-- Project 1: InternHunt -->
-      <article class="ch3-project ch3-project-primary" aria-label="InternHunt Project">
-        <div class="project-overlay-glow" aria-hidden="true"></div>
-        <div class="project-content">
-          <header class="project-header">
-            <span class="project-role">Flagship Project</span>
-            <h3 class="project-statement">Internships should not<br>be hard to find.</h3>
-          </header>
-
-          <div class="project-grid">
-            <div class="project-details">
-              <div class="detail-section">
-                <h4>The Problem</h4>
-                <p>Students know what they want. They don't always know where to find it. Skills, resumes, and
-                  opportunities exist as disconnected fragments.</p>
-              </div>
-              <div class="detail-section">
-                <h4>The Approach</h4>
-                <p>What if skills could lead directly to opportunities? Connecting resume credentials and real-time
-                  skill alignment into a direct recommendations course.</p>
-              </div>
-            </div>
-
-            <div class="project-details">
-              <div class="detail-section">
-                <h4>The Solution</h4>
-                <p><strong>InternHunt</strong> — An immersive workspace that maps a student's profile directly to
-                  relevant internships through real-time skills analysis and matching.</p>
-              </div>
-              <div class="detail-section">
-                <h4>The Outcome</h4>
-                <p>Built to bridge the gap and help students discover internships based on who they are becoming.</p>
-              </div>
-            </div>
+        <!-- Vertical Timeline List -->
+        <nav class="ch3-index-nav" aria-label="Projects Archive">
+          <div class="ch3-timeline-line" aria-hidden="true">
+            <div class="ch3-active-glow-node" id="active-glow-node"></div>
           </div>
-        </div>
-      </article>
+          <ul class="ch3-project-list" id="project-list-container">
+            <!-- Dynamic project list items go here -->
+          </ul>
+        </nav>
 
-      <hr class="ch3-divider" />
-
-      <!-- Project 2: Resume Analyzer -->
-      <article class="ch3-project" aria-label="Resume Analyzer Project">
-        <div class="project-content">
-          <header class="project-header">
-            <span class="project-role">Core Utility</span>
-            <h3 class="project-statement">A resume tells a story.<br>Most never read it properly.</h3>
-          </header>
-
-          <div class="project-grid">
-            <div class="project-details">
-              <div class="detail-section">
-                <h4>The Problem</h4>
-                <p>Many people possess valuable skills but fail to communicate them effectively. The gap is
-                  understanding and visibility.</p>
-              </div>
-            </div>
-
-            <div class="project-details">
-              <div class="detail-section">
-                <h4>The Solution</h4>
-                <p><strong>Resume Analyzer</strong> — An AI-powered tool built for self-discovery. It analyzes resume
-                  content, highlights hidden strengths, and provides actionable recommendations.</p>
-              </div>
-              <div class="detail-section">
-                <h4>The Outcome</h4>
-                <p>Helping people understand their strengths before employers do.</p>
-              </div>
-            </div>
+        <footer class="ch3-left-footer">
+          <div class="ch3-footer-spark" aria-hidden="true">✦</div>
+          <div class="ch3-footer-content">
+            <span class="font-tiny">EXPLORING • BUILDING • IMPACTING</span>
+            <p>Turning concepts into meaningful products.</p>
           </div>
+        </footer>
+      </aside>
+
+      <!-- RIGHT PANEL: DYNAMIC SHOWCASE -->
+      <main class="ch3-right-panel">
+        <div class="ch3-showcase-container" id="project-showcase-card">
+          <!-- Dynamic showcase content gets injected here -->
         </div>
-      </article>
-
-      <hr class="ch3-divider" />
-
-      <!-- Project 3: Data Projects -->
-      <article class="ch3-project ch3-project-condensed" aria-label="Supporting Data Projects">
-        <div class="project-content">
-          <header class="project-header">
-            <span class="project-role">Supporting Work</span>
-            <h3 class="project-statement">Data & Analytics</h3>
-          </header>
-
-          <div class="condensed-grid">
-            <div class="condensed-item">
-              <h4>Crime Against Women Analysis</h4>
-              <p>Data-driven investigation identifying safety patterns and geographical insights.</p>
-            </div>
-            <div class="condensed-item">
-              <h4>Time Series Forecasting</h4>
-              <p>Predictive model analyzing trends and seasonality for strategic planning.</p>
-            </div>
-            <div class="condensed-item">
-              <h4>Predictive Analytics</h4>
-              <p>Statistical models forecasting user behavior and business metrics.</p>
-            </div>
-            <div class="condensed-item">
-              <h4>Data Visualization</h4>
-              <p>Custom dashboards turning complex data tables into intuitive insights.</p>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <footer class="ch3-philosophy">
-        <p class="philosophy-text">“Building changed the way I learn. Learning changed the way I build.”</p>
-        <span class="philosophy-sub">Ideas become valuable when they become real.</span>
-      </footer>
-    </section>
+      </main>
+    </div>
   </div>
 </main>
 
