@@ -2308,6 +2308,28 @@
   }
 
   /* ────────────────────────────────────────────────
+     CHAPTER 5 : BEYOND THE PROJECTS — Scroll Reveal
+     ──────────────────────────────────────────────── */
+  function initChapter5() {
+    const revealEls = document.querySelectorAll(".ch5-reveal");
+    if (!revealEls.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("revealed");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    revealEls.forEach((el) => observer.observe(el));
+  }
+
+  /* ────────────────────────────────────────────────
      INIT EVERYTHING
      ──────────────────────────────────────────────── */
   function init() {
@@ -2322,6 +2344,7 @@
     initTopographyJourney();
     initChapter3();
     initChapter4();
+    initChapter5();
     window.addEventListener("resize", updateEyeCoordinates);
   }
 
