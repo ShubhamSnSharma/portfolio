@@ -1385,7 +1385,7 @@
         stack: ["Python", "Pandas", "NumPy", "Matplotlib", "Plotly"],
         buttons: [
           { label: "View Repository", url: "https://github.com/ShubhamSnSharma/Crime-Against-Women-Analysis-India", primary: true },
-          { label: "View Analysis", url: "https://github.com/ShubhamSnSharma/Crime-Against-Women-Analysis-India", primary: false }
+          { label: "View Analysis", url: "https://github.com/ShubhamSnSharma/Crime-Against-Women-Analysis-India/blob/main/notebooks/crime_against_women_analysis.ipynb", primary: false }
         ],
         visualType: "crime",
         useInsightCards: true,
