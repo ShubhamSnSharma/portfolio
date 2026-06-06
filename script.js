@@ -2340,15 +2340,30 @@
     // 1. Subtle Parallax Effect
     if (section && bg) {
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let ticking = false;
+      let sectionTop = section.getBoundingClientRect().top + window.scrollY;
+
+      // Recalculate on resize
+      window.addEventListener("resize", () => {
+        sectionTop = section.getBoundingClientRect().top + window.scrollY;
+      }, { passive: true });
+
       window.addEventListener("scroll", () => {
         if (prefersReducedMotion) return;
-        const rect = section.getBoundingClientRect();
-        const speed = window.innerWidth <= 768 ? 0.08 : 0.25;
-        // Only run parallax when Chapter 6 is in the viewport
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          // Negative rect.top means we've scrolled past the top of the section
-          const yPos = -rect.top * speed;
-          bg.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const currentScrollY = window.scrollY;
+            const rectTop = sectionTop - currentScrollY;
+            const speed = window.innerWidth <= 768 ? 0.08 : 0.25;
+            
+            // Only run parallax when Chapter 6 is in the viewport
+            if (rectTop < window.innerHeight && (rectTop + section.offsetHeight) > 0) {
+              const yPos = -rectTop * speed;
+              bg.style.transform = `translate3d(0, ${yPos}px, 0)`;
+            }
+            ticking = false;
+          });
+          ticking = true;
         }
       }, { passive: true });
     }

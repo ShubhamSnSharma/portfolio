@@ -9,8 +9,7 @@
   <title>Shubham Sharma | The Learner Becoming The Builder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=1.2" />
 </head>
@@ -95,9 +94,17 @@
 
       <div class="portrait-stage" data-portrait-stage>
         <div class="golden-arc" aria-hidden="true"></div>
-        <img class="portrait portrait-base anim-entry" data-delay="500" src="assets/images/portrait-primary.png"
-          alt="Shubham Sharma Portrait" />
-        <img class="portrait portrait-reveal" src="assets/images/portrait-reveal.png" alt="" aria-hidden="true" />
+        <picture>
+          <source media="(max-width: 768px)" srcset="assets/images/portrait-primary-mobile.webp" type="image/webp" />
+          <source srcset="assets/images/portrait-primary.webp" type="image/webp" />
+          <img class="portrait portrait-base anim-entry" data-delay="500" src="assets/images/portrait-primary.png"
+            alt="Shubham Sharma Portrait" fetchpriority="high" decoding="sync" />
+        </picture>
+        <picture>
+          <source media="(max-width: 768px)" srcset="assets/images/portrait-reveal-mobile.webp" type="image/webp" />
+          <source srcset="assets/images/portrait-reveal.webp" type="image/webp" />
+          <img class="portrait portrait-reveal" src="assets/images/portrait-reveal.png" alt="" aria-hidden="true" loading="lazy" />
+        </picture>
         <div class="reveal-aura" aria-hidden="true"></div>
         <div class="ch1-spark" id="ch1-spark" aria-hidden="true"></div>
       </div>
