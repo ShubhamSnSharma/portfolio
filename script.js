@@ -905,7 +905,9 @@
       function runFrame(now) {
         if (!isJourneyTransitionPlaying) return;
 
-        const elapsed = (now - transitionStartTime) / 1000;
+        const isMobile = window.innerWidth <= 768;
+        const speedMult = isMobile ? 1.75 : 1.0;
+        const elapsed = ((now - transitionStartTime) / 1000) * speedMult;
 
         if (elapsed < 17.5) {
           renderAutomaticTimelineState(elapsed);

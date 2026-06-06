@@ -3579,11 +3579,25 @@ a {
   }
   .ch3-showcase-container {
     padding: 16px 0 0 0 !important;
-    gap: 16px !important;
+    gap: 24px !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
-  .showcase-top-row, .showcase-bottom-row {
-    gap: 16px !important;
+  .showcase-top-row,
+  .showcase-middle-row,
+  .showcase-bottom-row,
+  .showcase-bottom-right {
+    display: contents !important;
   }
+  
+  /* Progressive Mobile Information Hierarchy */
+  .showcase-statement-area { order: 1; margin-bottom: -16px; }
+  .showcase-desc { order: 2; }
+  .showcase-visual-area { order: 3; margin-top: 8px; margin-bottom: 8px; }
+  .showcase-metrics-grid { order: 4; }
+  .showcase-bottom-left { order: 5; }
+  .showcase-tech { order: 6; margin-top: 12px; }
+  .showcase-buttons { order: 7; margin-top: 8px; }
 
   /* Chapter IV */
   .ch4-domains-wrapper {
