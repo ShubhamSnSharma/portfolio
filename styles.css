@@ -2311,6 +2311,9 @@ a {
     gap: 16px;
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .ch3-project-list::-webkit-scrollbar {
