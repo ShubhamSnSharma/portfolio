@@ -3584,6 +3584,19 @@ a {
     display: flex !important;
     flex-direction: column !important;
   }
+  .ch3-layout-grid {
+    max-width: 100vw !important;
+  }
+  .ch3-left-panel,
+  .ch3-right-panel {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+  .showcase-slide {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
   .showcase-top-row,
   .showcase-middle-row,
   .showcase-bottom-row,
@@ -3599,9 +3612,7 @@ a {
     order: 3; 
     margin-top: 8px; 
     margin-bottom: 8px; 
-    height: 200px !important;
-    max-height: 200px !important;
-    overflow: hidden !important;
+    height: auto !important;
     width: 100%;
   }
   .showcase-metrics-grid { order: 4; }
