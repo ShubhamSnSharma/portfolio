@@ -662,7 +662,7 @@ a {
 .ch2-topo-bg {
   position: absolute;
   inset: -100px;
-  background-image: url("assets/images/bg-final-chapter.webp");
+  background-image: url("assets/images/chapter2bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
