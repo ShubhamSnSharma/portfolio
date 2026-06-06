@@ -654,16 +654,18 @@ a {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(10, 14, 23, 0) 25%, #000000 85%);
+  background: rgba(10, 15, 26, 0.80);
   pointer-events: none;
   z-index: 1;
 }
 
 .ch2-topo-bg {
   position: absolute;
-  inset: -200px;
-  background-image: url("assets/images/bg-chapter2-journey.webp");
-  background-repeat: repeat;
+  inset: -100px;
+  background-image: url("assets/images/bg-final-chapter.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   z-index: 0;
   pointer-events: none;
   /* Hardware Acceleration */
@@ -674,13 +676,11 @@ a {
 }
 
 .ch2-topo-far {
-  background-size: 800px;
-  opacity: 0.06;
+  opacity: 0.3;
 }
 
 .ch2-topo-near {
-  background-size: 1200px;
-  opacity: 0.16;
+  display: none;
 }
 
 /* --- Atmospheric Aurora Glows --- */
@@ -3554,9 +3554,6 @@ a {
   /* Chapter II */
   .ch2-wrapper-outer {
     height: 120vh;
-  }
-  .ch2-topo-bg {
-    background-image: url("assets/images/bg-chapter2-journey-mobile.webp");
   }
   .ch2-floater.ch2-question { 
     left: 50% !important; 
