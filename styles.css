@@ -3504,35 +3504,55 @@ a {
   /* Chapter I */
   .name-art {
     flex-direction: column;
-    justify-content: center;
-    gap: 380px; 
+    justify-content: flex-start;
+    top: 15vh;
+    transform: none;
+    gap: 0;
+    z-index: 6;
   }
-  .name-left-col, .name-right {
+  .name-left-col {
+    display: contents;
+  }
+  .name-left, .name-right {
     transform: none !important;
     align-items: center;
     text-align: center;
     animation: none !important;
+    line-height: 0.9;
+  }
+  .name-left {
+    order: 1;
+  }
+  .name-right {
+    order: 2;
   }
   .manifesto-left {
     align-items: center;
     text-align: center;
+    order: 3;
+    margin-top: 24px;
+    max-width: 90vw;
   }
   .portrait-stage {
-    top: 10vh;
-    bottom: -5vh;
+    top: auto;
+    bottom: 0;
     left: -35vw;
     right: -35vw;
     width: auto;
-    height: auto;
+    height: 60vh;
     aspect-ratio: auto;
     transform: translate3d(0, 0, 0) !important;
     margin-top: 0;
+    z-index: 1;
   }
   .hero-title {
     font-size: clamp(32px, 8vw, 48px) !important;
   }
   
   /* Chapter II */
+  .ch2-wrapper-outer {
+    height: 120vh;
+  }
   .ch2-topo-bg {
     background-image: url("assets/images/bg-chapter2-journey-mobile.webp");
   }
@@ -3544,10 +3564,26 @@ a {
     width: 100%;
     transform: scale(0.8) !important;
   }
-  .ch2-floater.ch2-question:nth-child(1) { left: 10% !important; top: 30% !important; font-size: 10px !important; }
-  .ch2-floater.ch2-question:nth-child(2) { left: 50% !important; top: 45% !important; font-size: 10px !important; }
+  .ch2-floater.ch2-question:nth-child(1) { left: 10% !important; top: 20% !important; font-size: 10px !important; }
+  .ch2-floater.ch2-question:nth-child(2) { left: 60% !important; top: 40% !important; font-size: 10px !important; }
   .ch2-floater.ch2-question:nth-child(3) { left: 10% !important; top: 60% !important; font-size: 10px !important; }
-  .ch2-floater.ch2-question:nth-child(4) { left: 50% !important; top: 75% !important; font-size: 10px !important; }
+  .ch2-floater.ch2-question:nth-child(4) { left: 60% !important; top: 80% !important; font-size: 10px !important; }
+
+  /* Chapter III */
+  .ch3-layout-grid {
+    gap: 16px;
+    padding: 0 16px;
+  }
+  .ch3-left-panel {
+    gap: 12px;
+  }
+  .ch3-showcase-container {
+    padding: 16px 0 0 0 !important;
+    gap: 16px !important;
+  }
+  .showcase-top-row, .showcase-bottom-row {
+    gap: 16px !important;
+  }
 
   /* Chapter IV */
   .ch4-domains-wrapper {
@@ -3594,16 +3630,17 @@ a {
     font-size: clamp(36px, 10vw, 48px) !important;
   }
   .portrait-stage {
-    top: 10vh;
-    bottom: -5vh;
+    top: auto;
+    bottom: 0;
     left: -60vw;
     right: -60vw;
     width: auto;
-    height: auto;
+    height: 55vh;
     aspect-ratio: auto;
   }
   .name-art {
-    gap: 320px;
+    top: 12vh;
+    gap: 0;
   }
   
   .ch3-section, .ch4-section, .ch5-section, .ch6-section {
