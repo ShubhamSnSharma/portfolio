@@ -3563,18 +3563,21 @@ a {
     background-image: url("assets/images/bg-chapter2-journey-mobile.webp");
   }
   .ch2-path-scroll-wrapper {
-    left: 5vw !important;
-    width: 90vw !important;
+    left: 50% !important;
+    width: 1000px !important;
+    transform: translate(-50%, -50%) scale(0.65) !important;
   }
   .ch2-svg-path {
-    width: 100%;
-    transform: scale(0.8) !important;
+    width: 1000px !important;
+    transform: none !important;
   }
-  .ch2-floater.ch2-question { left: 50% !important; text-align: center; width: 90vw; }
-  .ch2-floater.ch2-question:nth-child(1) { top: 20% !important; font-size: 12px !important; }
-  .ch2-floater.ch2-question:nth-child(2) { top: 40% !important; font-size: 12px !important; }
-  .ch2-floater.ch2-question:nth-child(3) { top: 60% !important; font-size: 12px !important; }
-  .ch2-floater.ch2-question:nth-child(4) { top: 80% !important; font-size: 12px !important; }
+  .ch2-floater.ch2-question { 
+    left: 50% !important; 
+    text-align: center; 
+    width: 900px; 
+    font-size: 26px !important; 
+    white-space: normal !important;
+  }
 
   /* Chapter III */
   .ch3-layout-grid {
