@@ -3505,10 +3505,10 @@ a {
   .name-art {
     flex-direction: column;
     justify-content: flex-start;
-    top: 15vh;
+    top: 100px;
     transform: none;
     gap: 0;
-    z-index: 6;
+    z-index: 10;
   }
   .name-left-col {
     display: contents;
@@ -3539,11 +3539,14 @@ a {
     left: -35vw;
     right: -35vw;
     width: auto;
-    height: 60vh;
+    height: 45vh;
     aspect-ratio: auto;
     transform: translate3d(0, 0, 0) !important;
     margin-top: 0;
     z-index: 1;
+  }
+  .chapter-mark, .scroll-cue {
+    z-index: 10;
   }
   .hero-title {
     font-size: clamp(32px, 8vw, 48px) !important;
@@ -3564,10 +3567,11 @@ a {
     width: 100%;
     transform: scale(0.8) !important;
   }
-  .ch2-floater.ch2-question:nth-child(1) { left: 10% !important; top: 20% !important; font-size: 10px !important; }
-  .ch2-floater.ch2-question:nth-child(2) { left: 60% !important; top: 40% !important; font-size: 10px !important; }
-  .ch2-floater.ch2-question:nth-child(3) { left: 10% !important; top: 60% !important; font-size: 10px !important; }
-  .ch2-floater.ch2-question:nth-child(4) { left: 60% !important; top: 80% !important; font-size: 10px !important; }
+  .ch2-floater.ch2-question { left: 50% !important; text-align: center; width: 90vw; }
+  .ch2-floater.ch2-question:nth-child(1) { top: 20% !important; font-size: 12px !important; }
+  .ch2-floater.ch2-question:nth-child(2) { top: 40% !important; font-size: 12px !important; }
+  .ch2-floater.ch2-question:nth-child(3) { top: 60% !important; font-size: 12px !important; }
+  .ch2-floater.ch2-question:nth-child(4) { top: 80% !important; font-size: 12px !important; }
 
   /* Chapter III */
   .ch3-layout-grid {
@@ -3592,12 +3596,14 @@ a {
   
   /* Progressive Mobile Information Hierarchy */
   .showcase-statement-area { order: 1; margin-bottom: -16px; }
+  .showcase-statement { font-size: 24px !important; line-height: 1.2 !important; }
   .showcase-desc { order: 2; }
   .showcase-visual-area { order: 3; margin-top: 8px; margin-bottom: 8px; }
   .showcase-metrics-grid { order: 4; }
   .showcase-bottom-left { order: 5; }
   .showcase-tech { order: 6; margin-top: 12px; }
-  .showcase-buttons { order: 7; margin-top: 8px; }
+  .showcase-buttons { order: 7; margin-top: 8px; flex-direction: column; width: 100%; }
+  .showcase-buttons a { width: 100%; text-align: center; justify-content: center; }
 
   /* Chapter IV */
   .ch4-domains-wrapper {
