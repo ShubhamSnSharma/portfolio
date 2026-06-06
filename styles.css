@@ -3508,7 +3508,7 @@ a {
   .name-art {
     flex-direction: column;
     justify-content: flex-start;
-    top: 20vh !important;
+    top: 12vh !important;
     transform: none;
     gap: 0;
     z-index: 10;
@@ -3537,12 +3537,12 @@ a {
     max-width: 90vw;
   }
   .portrait-stage {
-    top: auto;
-    bottom: 0;
-    left: -35vw;
-    right: -35vw;
+    top: 15vh;
+    bottom: -5vh;
+    left: -25vw;
+    right: -25vw;
     width: auto;
-    height: 45vh;
+    height: auto;
     aspect-ratio: auto;
     transform: translate3d(0, 0, 0) !important;
     margin-top: 0;
