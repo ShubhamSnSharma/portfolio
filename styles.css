@@ -3265,8 +3265,8 @@ a {
   background-size: cover;
   background-position: center;
   /* background-attachment removed for custom JS parallax */
-  height: 130%; /* Extra height for parallax */
-  top: -15%;
+  height: 130vh; /* Decoupled from container height to prevent zoom */
+  top: -15vh;
   z-index: 1;
 }
 

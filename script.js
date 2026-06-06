@@ -2360,7 +2360,8 @@
             
             // Only run parallax when Chapter 6 is in the viewport
             if (rectTop < window.innerHeight && (rectTop + section.offsetHeight) > 0) {
-              const yPos = -rectTop * speed;
+              // Calculate yPos to track viewport (fixed) then apply the parallax speed factor
+              const yPos = -rectTop * (1 - speed);
               bg.style.transform = `translate3d(0, ${yPos}px, 0)`;
             }
             ticking = false;
