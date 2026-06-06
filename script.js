@@ -524,10 +524,24 @@
       }
     });
 
-    // Close when clicking a chapter link
+    // Close when clicking a chapter link and scroll smoothly
     overlay.querySelectorAll(".menu-link").forEach((link) => {
-      link.addEventListener("click", () => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute("href");
         closeMenu();
+        
+        if (targetId && targetId.startsWith("#")) {
+          // Add a tiny delay so the menu close animation begins before the scroll
+          setTimeout(() => {
+            if (typeof lenis !== 'undefined' && lenis) {
+              lenis.scrollTo(targetId, { duration: 1.2 });
+            } else {
+              const targetEl = document.querySelector(targetId);
+              if (targetEl) targetEl.scrollIntoView({ behavior: "smooth" });
+            }
+          }, 50);
+        }
       });
     });
   }
