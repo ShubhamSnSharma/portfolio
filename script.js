@@ -531,6 +531,10 @@
         const targetId = link.getAttribute("href");
         closeMenu();
         
+        // Prevent Chapter 2 from hijacking fast-travel
+        document.body.setAttribute("data-menu-traveling", "true");
+        setTimeout(() => document.body.removeAttribute("data-menu-traveling"), 1500);
+
         if (targetId && targetId.startsWith("#")) {
           // Add a tiny delay so the menu close animation begins before the scroll
           setTimeout(() => {
@@ -1148,8 +1152,14 @@
 
       // Check if we should trigger the automatic transition
       if (!hasPlayedJourney && scrollY >= wrapperOffset - 20) {
-        startAutomaticTransition();
-        return;
+        if (document.body.hasAttribute("data-menu-traveling")) {
+          // If the user fast-traveled via the menu, quietly mark it as played
+          // so we don't hijack their scroll, and let them reach their destination.
+          hasPlayedJourney = true;
+        } else {
+          startAutomaticTransition();
+          return;
+        }
       }
 
       let progress = (scrollY - wrapperOffset) / scrollLength;
