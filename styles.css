@@ -3562,20 +3562,11 @@ a {
   .ch2-topo-bg {
     background-image: url("assets/images/bg-chapter2-journey-mobile.webp");
   }
-  .ch2-path-scroll-wrapper {
-    left: 50% !important;
-    width: 1000px !important;
-    transform: translate(-50%, -50%) scale(0.65) !important;
-  }
-  .ch2-svg-path {
-    width: 1000px !important;
-    transform: none !important;
-  }
   .ch2-floater.ch2-question { 
     left: 50% !important; 
     text-align: center; 
-    width: 900px; 
-    font-size: 26px !important; 
+    width: 600px; 
+    font-size: 22px !important; 
     white-space: normal !important;
   }
 
