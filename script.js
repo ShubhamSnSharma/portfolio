@@ -931,8 +931,8 @@
       let filterUrl = "url(#organic-glow)";
 
       // Topo background opacities default
-      let topoFarOpacity = 0.06;
-      let topoNearOpacity = 0.16;
+      let topoFarOpacity = 0.30;
+      let topoNearOpacity = 0.45;
 
       // Reset all floaters and overlays unless active
       climax.classList.remove("revealed");
@@ -992,13 +992,13 @@
 
           // Frame 4: What if I fail? (elapsed 5.0s to 7.0s) -> Darkest emotional moment
           if (elapsed >= 5.0 && elapsed < 7.0) {
-            topoFarOpacity = 0.02;
-            topoNearOpacity = 0.06;
+            topoFarOpacity = 0.15;
+            topoNearOpacity = 0.25;
           }
           // Frame 5: What if it works? (elapsed 7.0s to 9.0s) -> Atmosphere opens up, hopeful
           if (elapsed >= 7.0 && elapsed < 9.0) {
-            topoFarOpacity = 0.10;
-            topoNearOpacity = 0.22;
+            topoFarOpacity = 0.40;
+            topoNearOpacity = 0.60;
           }
 
           // Node radius grows slightly with each question
