@@ -1378,7 +1378,7 @@
         number: "01",
         groupHeader: "FLAGSHIP WORK",
         title: "InternHunt",
-        category: "MERN • INTERNSHIP DISCOVERY",
+        category: "CAREER INTELLIGENCE • RESUME ANALYTICS • INTERNSHIP MATCHING",
         badge: "Flagship Project",
         statement: "Finding the right internship\nshouldn't feel like searching blind.",
         description: "Students often know their skills but struggle to discover opportunities that truly match them. InternHunt bridges that gap through resume analysis, skill extraction, internship discovery, and personalized recommendations.",
