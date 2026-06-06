@@ -3508,7 +3508,7 @@ a {
   .name-art {
     flex-direction: column;
     justify-content: flex-start;
-    top: 100px;
+    top: 20vh !important;
     transform: none;
     gap: 0;
     z-index: 10;
@@ -3601,7 +3601,15 @@ a {
   .showcase-statement-area { order: 1; margin-bottom: -16px; }
   .showcase-statement { font-size: 24px !important; line-height: 1.2 !important; }
   .showcase-desc { order: 2; }
-  .showcase-visual-area { order: 3; margin-top: 8px; margin-bottom: 8px; }
+  .showcase-visual-area { 
+    order: 3; 
+    margin-top: 8px; 
+    margin-bottom: 8px; 
+    height: 200px !important;
+    max-height: 200px !important;
+    overflow: hidden !important;
+    width: 100%;
+  }
   .showcase-metrics-grid { order: 4; }
   .showcase-bottom-left { order: 5; }
   .showcase-tech { order: 6; margin-top: 12px; }
