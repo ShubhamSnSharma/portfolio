@@ -355,9 +355,8 @@ a {
   position: absolute;
   top: -5vh;
   bottom: -3vh;
-  width: min(100vw, 1200px);
-  left: 50%;
-  transform: translate(-50%, 0) translate3d(0, 0, 0);
+  left: -2vw;
+  right: -2vw;
   /* Balanced overscan that maintains composition aspect ratio */
   z-index: 4;
   display: grid;
@@ -3476,14 +3475,14 @@ a {
     padding-inline: 4vw;
   }
   .portrait-stage {
-    width: min(120vw, 1000px);
-    height: auto;
-    aspect-ratio: 4/5;
     top: 5vh;
-    bottom: auto;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%) translate3d(0, 0, 0) !important;
+    bottom: -5vh;
+    left: -15vw;
+    right: -15vw;
+    width: auto;
+    height: auto;
+    aspect-ratio: auto;
+    transform: translate3d(0, 0, 0) !important;
   }
   /* Chapter III */
   .ch3-project-grid {
@@ -3519,14 +3518,14 @@ a {
     text-align: center;
   }
   .portrait-stage {
-    width: min(150vw, 900px);
-    height: auto;
-    aspect-ratio: 4/5;
     top: 10vh;
-    bottom: auto;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%) translate3d(0, 0, 0) !important;
+    bottom: -5vh;
+    left: -35vw;
+    right: -35vw;
+    width: auto;
+    height: auto;
+    aspect-ratio: auto;
+    transform: translate3d(0, 0, 0) !important;
     margin-top: 0;
   }
   .hero-title {
@@ -3595,9 +3594,13 @@ a {
     font-size: clamp(36px, 10vw, 48px) !important;
   }
   .portrait-stage {
-    width: min(180vw, 800px);
+    top: 10vh;
+    bottom: -5vh;
+    left: -60vw;
+    right: -60vw;
+    width: auto;
     height: auto;
-    aspect-ratio: 4/5;
+    aspect-ratio: auto;
   }
   .name-art {
     gap: 320px;
