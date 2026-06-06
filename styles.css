@@ -138,8 +138,7 @@ a {
 
 .grain {
   z-index: 7;
-  opacity: 0.22;
-  mix-blend-mode: soft-light;
+  opacity: 0.04;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
@@ -148,7 +147,7 @@ a {
 
 .grain::before {
   content: "";
-  opacity: 0.2;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
 }
 
@@ -356,8 +355,9 @@ a {
   position: absolute;
   top: -5vh;
   bottom: -3vh;
-  left: -2vw;
-  right: -8vw;
+  width: min(100vw, 1200px);
+  left: 50%;
+  transform: translate(-50%, 0) translate3d(0, 0, 0);
   /* Balanced overscan that maintains composition aspect ratio */
   z-index: 4;
   display: grid;
@@ -1528,7 +1528,7 @@ a {
   border-radius: 50%;
   background: var(--gold);
   box-shadow: 0 0 12px var(--gold), 0 0 6px var(--gold);
-  transition: top 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .ch3-project-list {
@@ -1856,7 +1856,7 @@ a {
   font-size: 12px;
   line-height: 1.5;
   color: var(--muted);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -2074,7 +2074,7 @@ a {
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
   box-sizing: border-box;
 }
 
@@ -3433,7 +3433,7 @@ a {
   background: rgba(212, 164, 77, 0.05);
   border: 1px solid rgba(212, 164, 77, 0.3);
   border-radius: 100px;
-  transition: all 0.4s ease;
+  transition: transform 0.4s ease, color 0.4s ease, border-color 0.4s ease, background-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 .ch6-glass-btn:hover {
@@ -3476,7 +3476,7 @@ a {
     padding-inline: 4vw;
   }
   .portrait-stage {
-    width: 320px;
+    width: min(120vw, 1000px);
     height: auto;
     aspect-ratio: 4/5;
     top: 5vh;
@@ -3519,7 +3519,7 @@ a {
     text-align: center;
   }
   .portrait-stage {
-    width: 280px;
+    width: min(150vw, 900px);
     height: auto;
     aspect-ratio: 4/5;
     top: 10vh;
@@ -3595,7 +3595,7 @@ a {
     font-size: clamp(36px, 10vw, 48px) !important;
   }
   .portrait-stage {
-    width: 240px;
+    width: min(180vw, 800px);
     height: auto;
     aspect-ratio: 4/5;
   }

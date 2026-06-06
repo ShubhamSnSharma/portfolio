@@ -1495,7 +1495,7 @@
         const navRect = navContainer.getBoundingClientRect();
         const itemRect = activeItem.getBoundingClientRect();
         const topPos = itemRect.top - navRect.top + (itemRect.height / 2) - 4.5;
-        glowNode.style.top = `${topPos}px`;
+        glowNode.style.transform = `translateY(${topPos}px)`;
         glowNode.style.opacity = "1";
       } else {
         glowNode.style.opacity = "0";
