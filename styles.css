@@ -2305,15 +2305,12 @@ a {
   }
 
   .ch3-project-list {
-    flex-direction: row;
-    overflow-x: auto;
+    flex-direction: column;
+    overflow-x: hidden;
     padding-bottom: 12px;
-    gap: 16px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    margin: 0 -16px;
-    padding-left: 16px;
-    padding-right: 16px;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
   }
 
   .ch3-project-list::-webkit-scrollbar {
@@ -2321,15 +2318,14 @@ a {
   }
 
   .ch3-index-item {
-    padding: 0;
-    scroll-snap-align: start;
+    padding: 12px 20px;
     flex-shrink: 0;
     flex-direction: row;
     align-items: center;
     background: rgba(245, 241, 232, 0.02);
     border: 1px solid rgba(245, 241, 232, 0.05);
-    padding: 12px 20px;
     border-radius: 8px;
+    width: 100%;
   }
 
   .ch3-index-item.active {
