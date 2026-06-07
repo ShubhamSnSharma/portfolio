@@ -56,3 +56,9 @@ To run the portfolio locally without triggering cross-origin resource sharing (C
 - **GitHub:** [github.com/ShubhamSnSharma](https://github.com/ShubhamSnSharma)
 - **LinkedIn:** [linkedin.com/in/shubhamsnsharma](https://www.linkedin.com/in/shubhamsnsharma)
 - **Email:** shubhamsnsharma@gmail.com
+
+## License
+
+This project is protected under an All Rights Reserved license.
+
+The source code, design, animations, and assets may not be copied, modified, distributed, or reused without explicit permission from the author.
