@@ -10,7 +10,7 @@
 [![Lighthouse Performance](https://img.shields.io/badge/Performance-99%2F100-success?style=for-the-badge&logo=lighthouse&logoColor=white)](#)
 [![Lighthouse Accessibility](https://img.shields.io/badge/Accessibility-100%2F100-success?style=for-the-badge&logo=lighthouse&logoColor=white)](#)
 
-**🔗 Live Experience: [internhuntt.vercel.app](https://shubhamsn.vercel.app)**
+**🔗 Live Experience: [shubhamsn.vercel.app](https://shubhamsn.vercel.app)**
 
 </div>
 
