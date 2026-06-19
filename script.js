@@ -44,28 +44,208 @@
   /* ────────────────────────────────────────────────
      2. ENTRY ANIMATION (staggered fade-in)
      ──────────────────────────────────────────────── */
-  function initEntryAnimation() {
-    // Small delay so the browser finishes layout
-    requestAnimationFrame(() => {
+  function initEntryAnimation(instant = false) {
+    if (instant) {
+      document.body.classList.add("reveal-active");
+      document.body.removeAttribute("data-loading");
       const entries = $$(".anim-entry");
       entries.forEach((el) => {
-        const delay = parseInt(el.dataset.delay || 0, 10);
-        setTimeout(() => {
-          el.style.opacity = "";
-          el.style.transform = "";
-          // Remove the class after the transition completes (0.9s = 900ms)
-          // to prevent transition lag during scroll and parallax events
-          setTimeout(() => {
-            el.classList.remove("anim-entry");
-          }, 900);
-        }, delay);
+        el.style.opacity = "";
+        el.style.transform = "";
+        el.classList.remove("anim-entry");
       });
+      return;
+    }
+    // Otherwise, we do nothing yet. The reveal will be triggered by startPortfolioReveal()
+  }
 
-      // Remove the loading flag after all entries have animated (1400ms max delay + 900ms transition)
-      setTimeout(() => {
-        document.body.removeAttribute("data-loading");
-      }, 2300);
+  // Exposed reveal controller triggered by the loader dissolve
+  window.startPortfolioReveal = function() {
+    const entries = $$(".anim-entry");
+
+    // 1. Force entries to start at opacity 0, translateY(18px) to staging
+    entries.forEach((el) => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(18px)";
     });
+
+    // 2. Remove data-loading immediately so stylesheet rule is dismissed
+    document.body.removeAttribute("data-loading");
+
+    // 3. Trigger progressive background blur fade and sharpen
+    document.body.classList.add("reveal-transitioning");
+    requestAnimationFrame(() => {
+      document.body.classList.add("reveal-active");
+    });
+
+    // Clean up transitioning class to ease portrait color grading back to normal
+    setTimeout(() => {
+      document.body.classList.remove("reveal-transitioning");
+    }, 900);
+
+    // 4. Trigger stagger entries
+    entries.forEach((el) => {
+      const delay = parseInt(el.dataset.delay || 0, 10);
+      setTimeout(() => {
+        el.style.opacity = "";
+        el.style.transform = "";
+        
+        // Remove anim-entry class after transition completes to prevent scroll lag
+        setTimeout(() => {
+          el.classList.remove("anim-entry");
+        }, 900);
+      }, delay);
+    });
+  };
+
+  /* ────────────────────────────────────────────────
+     2.5. CINEMATIC PROLOGUE LOADER RUNNER
+     ──────────────────────────────────────────────── */
+  const SCAN_MS    = 1000; // Optimized scan sweep duration
+  const EXTRA_PX   = 40;   // scan continuation past phrase text
+  const NAME_HOLD  = 400;  // Pause to appreciate fully settled phrase
+
+  const G_BRIGHT   = { r: 200, g: 152, b: 30 };
+  const G_SETTLED  = { r: 162, g: 118, b: 24 };
+
+  // Analytical Solver for CSS-like Cubic Bezier Curves
+  function cubicBezier(p1x, p1y, p2x, p2y) {
+    const cx = 3.0 * p1x;
+    const bx = 3.0 * (p2x - p1x) - cx;
+    const ax = 1.0 - cx - bx;
+    const cy = 3.0 * p1y;
+    const by = 3.0 * (p2y - p1y) - cy;
+    const ay = 1.0 - cy - by;
+    
+    function sampleCurveX(t) { return ((ax * t + bx) * t + cx) * t; }
+    function sampleCurveY(t) { return ((ay * t + by) * t + cy) * t; }
+    function sampleCurveDerivativeX(t) { return (3.0 * ax * t + 2.0 * bx) * t + cx; }
+    
+    function solveCurveX(x, epsilon = 1e-5) {
+      let t = x;
+      for (let i = 0; i < 8; i++) {
+        const xSample = sampleCurveX(t) - x;
+        if (Math.abs(xSample) < epsilon) return t;
+        const d = sampleCurveDerivativeX(t);
+        if (Math.abs(d) < 1e-6) break;
+        t = t - xSample / d;
+      }
+      return t;
+    }
+    return function(x) { return sampleCurveY(solveCurveX(x)); };
+  }
+
+  const easeScan = cubicBezier(0.76, 0, 0.24, 1);
+  const easeOut = t => 1 - Math.pow(1 - t, 3);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  function tween(ms, fn, ease = easeScan) {
+    return new Promise(resolve => {
+      let start = null;
+      function frame(ts) {
+        if (!start) start = ts;
+        const raw = Math.min((ts - start) / ms, 1);
+        fn(ease(raw), raw);
+        raw < 1 ? requestAnimationFrame(frame) : resolve();
+      }
+      requestAnimationFrame(frame);
+    });
+  }
+
+  async function runScan(textEndX, maskRect, scanEl) {
+    const totalTravel = textEndX + EXTRA_PX;
+    await tween(SCAN_MS, (eased) => {
+      const x = totalTravel * eased;
+      maskRect.setAttribute('width', String(Math.min(x, textEndX + 1)));
+      scanEl.setAttribute('x1', String(x));
+      scanEl.setAttribute('x2', String(x));
+
+      let op = 0.50;
+      if (x < 40) {
+        op = 0.50 * (x / 40);
+      } else if (x > textEndX) {
+        const beyond = Math.min((x - textEndX) / EXTRA_PX, 1);
+        op = 0.50 * (1 - beyond);
+      }
+      scanEl.setAttribute('opacity', String(op));
+    }, easeScan);
+    scanEl.setAttribute('opacity', '0');
+  }
+
+  async function coolMetal(nameLit) {
+    // Phase 1: Heat up / Glow pulse (180ms)
+    await tween(180, (e) => {
+      const r = Math.round(lerp(200, 250, e));
+      const g = Math.round(lerp(152, 200, e));
+      const b = Math.round(lerp(30, 40, e));
+      nameLit.setAttribute('fill', `rgb(${r}, ${g}, ${b})`);
+      const blur = lerp(0, 3.5, e);
+      nameLit.style.filter = `drop-shadow(0 0 ${blur}px rgba(250, 200, 40, ${e * 0.45}))`;
+    }, easeOut);
+
+    // Phase 2: Cool down / Settle (620ms)
+    await tween(620, (e) => {
+      const r = Math.round(lerp(250, G_SETTLED.r, e));
+      const g = Math.round(lerp(200, G_SETTLED.g, e));
+      const b = Math.round(lerp(40, G_SETTLED.b, e));
+      nameLit.setAttribute('fill', `rgb(${r}, ${g}, ${b})`);
+      const blur = lerp(3.5, 0, e);
+      const opacity = lerp(0.45, 0, e);
+      nameLit.style.filter = opacity > 0.01 ? `drop-shadow(0 0 ${blur}px rgba(250, 200, 40, ${opacity}))` : 'none';
+    }, easeOut);
+  }
+
+  async function dissolveIntoPortfolio(loaderEl, labelEl) {
+    // Start fading in landing background and triggering elements reveal
+    window.startPortfolioReveal();
+
+    // Fade out the loader wrapper in overlap (using stylesheet's 0.8s transition)
+    loaderEl.style.opacity = '0';
+
+    await wait(820);
+    loaderEl.style.display = 'none';
+  }
+
+  async function runLoaderSequence() {
+    const loaderEl   = document.getElementById('loader');
+    const veilEl     = document.getElementById('veil');
+    const labelEl    = document.getElementById('prologue-label');
+    const maskRect   = document.getElementById('mask-rect');
+    const scanEl     = document.getElementById('scan');
+    const phraseLit  = document.getElementById('phrase-lit');
+
+    if (!loaderEl || !veilEl || !labelEl || !phraseLit) {
+      initEntryAnimation(true);
+      return;
+    }
+
+    await document.fonts.ready;
+
+    let textEndX = 480;
+    try {
+      const bb = phraseLit.getBBox();
+      textEndX = bb.x + bb.width;
+    } catch (_) {}
+
+    veilEl.style.transition = 'opacity 500ms ease';
+    veilEl.style.opacity    = '0';
+    await wait(180);
+
+    labelEl.classList.add('show');
+    await wait(220);
+
+    // T=400 — Scan begins (1000ms)
+    await runScan(textEndX, maskRect, scanEl);
+    
+    // T=1400 — Settle glow (600ms total)
+    await coolMetal(phraseLit);
+    
+    // T=2000 — Hold for 400ms
+    await wait(NAME_HOLD);
+    
+    // T=2400 — Dissolve (800ms)
+    await dissolveIntoPortfolio(loaderEl, labelEl);
   }
 
   /* ────────────────────────────────────────────────
@@ -2418,7 +2598,25 @@
      ──────────────────────────────────────────────── */
   function init() {
     initLenis();
-    initEntryAnimation();
+    
+    // Check session guard first
+    const KEY   = 'prologue-seen';
+    const force = new URLSearchParams(window.location.search).has('replay');
+    const hasSeen = !force && sessionStorage.getItem(KEY);
+
+    if (hasSeen) {
+      // Skip loader, trigger instant reveal
+      const loaderEl = document.getElementById('loader');
+      const veilEl = document.getElementById('veil');
+      if (loaderEl) loaderEl.style.display = 'none';
+      if (veilEl) veilEl.style.display = 'none';
+      initEntryAnimation(true);
+    } else {
+      sessionStorage.setItem(KEY, '1');
+      initEntryAnimation(false);
+      runLoaderSequence();
+    }
+
     updateEyeCoordinates(); // Initialize eye coords on load
     requestRender(); // Start the state-driven render loop initially
     initParticles();

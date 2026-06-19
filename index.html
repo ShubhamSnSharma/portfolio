@@ -9,660 +9,738 @@
   <title>Shubham Sharma | The Learner Becoming The Builder</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap"
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="styles.css?v=1.2" />
 </head>
 
-<!-- Floating dust particles -->
-<canvas id="particles" aria-hidden="true"></canvas>
+<body data-loading>
 
-<!-- Fullscreen menu overlay -->
-<nav class="menu-overlay" id="menu-overlay" aria-hidden="true">
-  <button class="menu-close" id="menu-close" type="button" aria-label="Close menu">
-    <span></span>
-    <span></span>
-  </button>
-  <div class="menu-inner">
-    <div class="menu-chapters">
-      <a href="#chapter-1" class="menu-link">
-        <span class="menu-num">01</span>
-        <span class="menu-title">The Learner</span>
-      </a>
-      <a href="#journey" class="menu-link">
-        <span class="menu-num">02</span>
-        <span class="menu-title">The Journey</span>
-      </a>
-      <a href="#chapter-3-section" class="menu-link">
-        <span class="menu-num">03</span>
-        <span class="menu-title">The Builder</span>
-      </a>
-      <a href="#chapter-4" class="menu-link">
-        <span class="menu-num">04</span>
-        <span class="menu-title">The Thinker</span>
-      </a>
-      <a href="#chapter-5" class="menu-link">
-        <span class="menu-num">05</span>
-        <span class="menu-title">Beyond the Projects</span>
-      </a>
-      <a href="#chapter-6" class="menu-link">
-        <span class="menu-num">06</span>
-        <span class="menu-title">The Final Page</span>
-      </a>
+  <!-- Veil (starts opaque) -->
+  <div id="veil"></div>
+
+  <div id="loader">
+    <!-- 00 / Prologue — top-left, very small -->
+    <div id="prologue-label">
+      <span class="lbl lbl-num">00</span>
+      <span class="lbl lbl-word">Prologue</span>
     </div>
-    <div class="menu-social">
-      <a href="https://github.com/ShubhamSnSharma" target="_blank" rel="noopener" aria-label="Visit GitHub Profile">GitHub</a>
-      <a href="https://www.linkedin.com/in/shubhamsnsharma" target="_blank" rel="noopener" aria-label="Visit LinkedIn Profile">LinkedIn</a>
-      <a href="mailto:shubhamsnsharma@gmail.com" aria-label="Send an Email">Email</a>
+
+    <!-- Centered Phrase SVG (Option A) -->
+    <div id="phrase-svg-wrap">
+      <svg id="phrase-svg" viewBox="0 0 540 60" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+        aria-label="The Journey Begins." role="img">
+        <defs>
+          <!-- Reveal mask: rect expands left → right -->
+          <mask id="m">
+            <rect id="mask-rect" x="0" y="0" width="0" height="60" fill="white" />
+          </mask>
+
+          <!-- Scan line glow -->
+          <filter id="f-scan" x="-120%" y="-120%" width="340%" height="340%">
+            <feGaussianBlur stdDeviation="0.7" />
+          </filter>
+        </defs>
+
+        <!-- Engraved base: barely there (slightly brighter for contrast) -->
+        <text x="270" y="40" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-style="italic"
+          font-size="28" letter-spacing="3.5" fill="rgba(168, 120, 26, 0.14)" aria-hidden="true">The Journey
+          Begins.</text>
+
+        <!-- Illuminated text — uncovered by mask as light passes -->
+        <g mask="url(#m)">
+          <text id="phrase-lit" x="270" y="40" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif"
+            font-style="italic" font-size="28" letter-spacing="3.5" fill="#C8981E">The Journey Begins.</text>
+        </g>
+
+        <!-- The travelling line -->
+        <line id="scan" x1="0" y1="12" x2="0" y2="48" stroke="#B88820" stroke-width="0.85" stroke-linecap="round"
+          opacity="0" filter="url(#f-scan)" />
+      </svg>
     </div>
   </div>
-</nav>
 
-<main class="experience">
-  <!-- ═══════════════════════════════════ -->
-  <!-- CHAPTER I : THE LEARNER            -->
-  <!-- ═══════════════════════════════════ -->
-  <!-- Chapter I wrapper for sticky scroll-driven transition -->
-  <div class="ch1-wrapper" id="chapter-1">
-    <section class="hero" aria-labelledby="hero-title">
+  <!-- Floating dust particles -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- Fullscreen menu overlay -->
+  <nav class="menu-overlay" id="menu-overlay" aria-hidden="true">
+    <button class="menu-close" id="menu-close" type="button" aria-label="Close menu">
+      <span></span>
+      <span></span>
+    </button>
+    <div class="menu-inner">
+      <div class="menu-chapters">
+        <a href="#chapter-1" class="menu-link">
+          <span class="menu-num">01</span>
+          <span class="menu-title">The Learner</span>
+        </a>
+        <a href="#journey" class="menu-link">
+          <span class="menu-num">02</span>
+          <span class="menu-title">The Journey</span>
+        </a>
+        <a href="#chapter-3-section" class="menu-link">
+          <span class="menu-num">03</span>
+          <span class="menu-title">The Builder</span>
+        </a>
+        <a href="#chapter-4" class="menu-link">
+          <span class="menu-num">04</span>
+          <span class="menu-title">The Thinker</span>
+        </a>
+        <a href="#chapter-5" class="menu-link">
+          <span class="menu-num">05</span>
+          <span class="menu-title">Beyond the Projects</span>
+        </a>
+        <a href="#chapter-6" class="menu-link">
+          <span class="menu-num">06</span>
+          <span class="menu-title">The Final Page</span>
+        </a>
+      </div>
+      <div class="menu-social">
+        <a href="https://github.com/ShubhamSnSharma" target="_blank" rel="noopener"
+          aria-label="Visit GitHub Profile">GitHub</a>
+        <a href="https://www.linkedin.com/in/shubhamsnsharma" target="_blank" rel="noopener"
+          aria-label="Visit LinkedIn Profile">LinkedIn</a>
+        <a href="mailto:shubhamsnsharma@gmail.com" aria-label="Send an Email">Email</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="experience">
+    <!-- ═══════════════════════════════════ -->
+    <!-- CHAPTER I : THE LEARNER            -->
+    <!-- ═══════════════════════════════════ -->
+    <!-- Chapter I wrapper for sticky scroll-driven transition -->
+    <div class="ch1-wrapper" id="chapter-1">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="grain" aria-hidden="true"></div>
+        <div class="ambient ambient-left" aria-hidden="true"></div>
+        <div class="ambient ambient-right" aria-hidden="true"></div>
+
+        <header class="topline anim-entry" data-delay="300">
+          <button class="menu-button" id="menu-toggle" type="button" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+            <b>Menu</b>
+          </button>
+        </header>
+
+        <div class="name-art" aria-hidden="true">
+          <div class="name-left-col anim-entry" data-delay="180">
+            <span class="name-left">Shubham</span>
+            <div class="manifesto-left anim-entry" data-delay="300">
+              <span class="manifesto-sub">Computer Science Student</span>
+              <p class="manifesto-body">
+                Curious by nature. Disciplined by choice.<br />
+                <span>Turning ideas into products through code, design and data.</span>
+              </p>
+            </div>
+          </div>
+          <span class="name-right anim-entry" data-delay="180">Sharma</span>
+        </div>
+
+        <div class="portrait-stage" data-portrait-stage>
+          <div class="golden-arc" aria-hidden="true"></div>
+          <picture>
+            <source media="(max-width: 768px)" srcset="assets/images/portrait-primary-mobile.webp" type="image/webp" />
+            <source srcset="assets/images/portrait-primary.webp" type="image/webp" />
+            <img class="portrait portrait-base anim-entry" data-delay="80" src="assets/images/portrait-primary.png"
+              alt="Shubham Sharma Portrait" fetchpriority="high" decoding="sync" />
+          </picture>
+          <picture>
+            <source media="(max-width: 768px)" srcset="assets/images/portrait-reveal-mobile.webp" type="image/webp" />
+            <source srcset="assets/images/portrait-reveal.webp" type="image/webp" />
+            <img class="portrait portrait-reveal" src="assets/images/portrait-reveal.png" alt="" aria-hidden="true"
+              loading="lazy" />
+          </picture>
+          <div class="reveal-aura" aria-hidden="true"></div>
+          <div class="ch1-spark" id="ch1-spark" aria-hidden="true"></div>
+        </div>
+
+        <!-- Cinematic text threshold bridge -->
+        <div class="cinematic-bridge" aria-hidden="true">
+          <p class="bridge-text">
+            “Curiosity came first. Everything else followed.”
+          </p>
+        </div>
+
+        <div class="chapter-mark anim-entry" data-delay="300">
+          <p>Chapter I</p>
+          <h1 id="hero-title">
+            <span class="title-learner">The Learner</span>
+            <span class="title-builder">The Builder</span>
+          </h1>
+        </div>
+
+
+        <a class="scroll-cue anim-entry" data-delay="1200" href="#journey" aria-label="Scroll to begin the journey">
+          <span>Scroll</span>
+          <i></i>
+        </a>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CHAPTER II : THE JOURNEY           -->
+    <!-- ═══════════════════════════════════ -->
+    <div id="journey-wrapper" class="ch2-wrapper-outer">
+      <div id="journey" class="ch2-container">
+        <div class="ch2-topo-bg ch2-topo-far" aria-hidden="true"></div>
+        <div class="ch2-topo-bg ch2-topo-near" aria-hidden="true"></div>
+        <!-- Atmospheric Aurora Glows -->
+        <div class="ch2-ambient-aurora ch2-aurora-blue" aria-hidden="true"></div>
+        <div class="ch2-ambient-aurora ch2-aurora-amber" aria-hidden="true"></div>
+
+        <!-- Viewport 2: CHAPTER II entry labels -->
+        <section class="ch2-intro-scene" id="ch2-intro" aria-label="Chapter Intro">
+          <div class="ch2-intro-content">
+            <span class="font-tiny">Chapter II</span>
+            <h2 class="font-massive text-white">The<br />Journey</h2>
+          </div>
+        </section>
+
+        <!-- The Living Golden Thread Path Container -->
+        <section class="ch2-path-scene" id="ch2-path-scene" aria-label="Interactive Journey Path">
+          <div class="ch2-path-scroll-wrapper" id="path-scroll-wrapper">
+            <svg class="ch2-svg-path" viewBox="0 0 1000 1000" preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#f3d078" />
+                  <stop offset="50%" stop-color="#d4a44d" />
+                  <stop offset="100%" stop-color="#8a6421" />
+                </linearGradient>
+                <filter id="organic-glow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" result="noise" />
+                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"
+                    result="displaced" />
+                  <feGaussianBlur in="displaced" stdDeviation="5" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="displaced" />
+                  </feMerge>
+                </filter>
+                <filter id="organic-intense-glow" x="-100%" y="-100%" width="300%" height="300%">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" result="noise" />
+                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"
+                    result="displaced" />
+                  <feGaussianBlur in="displaced" stdDeviation="12" result="blur1" />
+                  <feGaussianBlur in="displaced" stdDeviation="5" result="blur2" />
+                  <feMerge>
+                    <feMergeNode in="blur1" />
+                    <feMergeNode in="blur2" />
+                    <feMergeNode in="displaced" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <!-- Winding Golden Path (Active progressive drawing layer) -->
+              <path id="journey-path"
+                d="M 500 100 C 500 220, 320 220, 320 360 C 320 500, 680 500, 680 640 C 680 780, 500 780, 500 900"
+                stroke="url(#gold-gradient)" stroke-width="2" fill="none" filter="url(#organic-glow)" />
+
+              <!-- Destination Node -->
+              <circle cx="500" cy="900" r="10" class="ch2-node-dot destination-node" id="dot-destination" />
+
+              <!-- The Glowing Lead Node (Traveler) -->
+              <circle id="glowing-node" cx="500" cy="100" r="8" fill="#d4a44d" filter="url(#glow)" />
+            </svg>
+
+            <!-- Particle flow canvas -->
+            <canvas id="ch2-canvas" class="ch2-canvas" width="1000" height="1000" aria-hidden="true"></canvas>
+
+            <!-- Floating questions (Scene 3) -->
+            <div class="ch2-floater ch2-question" style="left: 200px; top: 300px;">HOW DOES THIS WORK?</div>
+            <div class="ch2-floater ch2-question" style="left: 650px; top: 420px;">CAN I BUILD THIS?</div>
+            <div class="ch2-floater ch2-question" style="left: 350px; top: 580px;">WHAT IF I FAIL?</div>
+            <div class="ch2-floater ch2-question" style="left: 800px; top: 700px;">WHAT IF IT WORKS?</div>
+          </div>
+        </section>
+
+
+        <!-- Climax Scene Overlay -->
+        <div id="turning-point" class="ch2-climax-overlay">
+          <div class="climax-inner">
+            <span class="turning-line-consume">I Stopped Consuming.</span>
+            <span class="turning-line-build">I Started Building.</span>
+          </div>
+        </div>
+
+        <!-- Destination Exit Scene Overlay -->
+        <div id="exit" class="ch2-exit-overlay">
+          <span class="font-tiny">Next Chapter</span>
+          <h2 id="chapter-3" class="font-massive highlight-gold clickable-portal">The Work</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CHAPTER III : THE BUILDER          -->
+    <!-- ═══════════════════════════════════ -->
+    <div id="chapter-3-section" class="ch3-wrapper">
       <div class="grain" aria-hidden="true"></div>
-      <div class="ambient ambient-left" aria-hidden="true"></div>
-      <div class="ambient ambient-right" aria-hidden="true"></div>
+      <div class="ch3-layout-grid">
+        <!-- LEFT PANEL: PROJECT INDEX -->
+        <aside class="ch3-left-panel">
+          <header class="ch3-header-editorial">
+            <span class="font-small highlight-gold">Chapter III</span>
+            <h2 class="font-large text-white">The Builder</h2>
+            <span class="font-tiny highlight-gold">The Work</span>
+          </header>
 
-      <header class="topline anim-entry" data-delay="300">
-        <button class="menu-button" id="menu-toggle" type="button" aria-label="Open menu">
-          <span></span>
-          <span></span>
-          <span></span>
-          <b>Menu</b>
-        </button>
+          <!-- Vertical Timeline List -->
+          <nav class="ch3-index-nav" aria-label="Projects Archive">
+            <div class="ch3-timeline-line" aria-hidden="true">
+              <div class="ch3-active-glow-node" id="active-glow-node"></div>
+            </div>
+            <ul class="ch3-project-list" id="project-list-container">
+              <!-- Dynamic project list items go here -->
+            </ul>
+          </nav>
+
+          <footer class="ch3-left-footer">
+            <div class="ch3-footer-spark" aria-hidden="true">✦</div>
+            <div class="ch3-footer-content">
+              <span class="font-tiny">EXPLORING • BUILDING • IMPACTING</span>
+              <p>Turning concepts into meaningful products.</p>
+            </div>
+          </footer>
+        </aside>
+
+        <!-- RIGHT PANEL: DYNAMIC SHOWCASE -->
+        <main class="ch3-right-panel">
+          <div class="ch3-showcase-container" id="project-showcase-card">
+            <!-- Dynamic showcase content gets injected here -->
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CHAPTER IV : THE THINKER           -->
+    <!-- ═══════════════════════════════════ -->
+    <section id="chapter-4" class="ch4-section" aria-labelledby="ch4-title">
+      <div class="grain" aria-hidden="true"></div>
+
+      <!-- Ambient background glows -->
+      <div class="ch4-ambient ch4-ambient-left" aria-hidden="true"></div>
+      <div class="ch4-ambient ch4-ambient-right" aria-hidden="true"></div>
+
+      <!-- Section Header -->
+      <header class="ch4-header">
+        <span class="font-small highlight-gold ch4-reveal">Chapter IV</span>
+        <div class="ch4-rule ch4-reveal" aria-hidden="true"></div>
+        <h2 id="ch4-title" class="ch4-headline ch4-reveal">
+          <span class="ch4-headline-plain">Ideas are easy.</span><br>
+          <span class="ch4-headline-gold">Execution is everything.</span>
+        </h2>
+        <div class="ch4-diamond ch4-reveal" aria-hidden="true">✦</div>
+        <p class="ch4-intro ch4-reveal">
+          I enjoy working at the intersection of data, technology, and problem-solving.<br>
+          Whether I'm analyzing complex datasets, building predictive models, or developing&nbsp;products,<br>
+          my focus is always on creating practical solutions that deliver real-world value.
+        </p>
       </header>
 
-      <div class="name-art" aria-hidden="true">
-        <div class="name-left-col anim-entry" data-delay="700">
-          <span class="name-left">Shubham</span>
-          <div class="manifesto-left">
-            <span class="manifesto-sub">Computer Science Student</span>
-            <p class="manifesto-body">
-              Curious by nature. Disciplined by choice.<br />
-              <span>Turning ideas into products through code, design and data.</span>
+      <!-- Capability Domains -->
+      <div class="ch4-domains">
+
+        <!-- Domain 01: Analytics & Insights — LEFT -->
+        <article class="ch4-domain ch4-domain-left ch4-reveal" aria-label="Analytics and Insights">
+          <div class="ch4-domain-inner">
+            <div class="ch4-domain-header">
+              <span class="ch4-domain-num">01</span>
+              <h3 class="ch4-domain-title">Analytics &amp; Insights</h3>
+            </div>
+            <div class="ch4-domain-tags">
+              <span class="ch4-tag">Data Analysis</span>
+              <span class="ch4-tag">Exploratory Data Analysis</span>
+              <span class="ch4-tag">Statistical Analysis</span>
+              <span class="ch4-tag">Data Visualization</span>
+              <span class="ch4-tag">Dashboard Design</span>
+              <span class="ch4-tag">Time Series Forecasting</span>
+            </div>
+            <p class="ch4-domain-desc">
+              Turning data into actionable insights through analysis and storytelling.
             </p>
           </div>
+          <div class="ch4-domain-accent ch4-accent-01" aria-hidden="true"></div>
+        </article>
+
+        <!-- Domain 02: Machine Learning — RIGHT -->
+        <article class="ch4-domain ch4-domain-right ch4-reveal" aria-label="Machine Learning">
+          <div class="ch4-domain-inner">
+            <div class="ch4-domain-header">
+              <span class="ch4-domain-num">02</span>
+              <h3 class="ch4-domain-title">Machine Learning</h3>
+            </div>
+            <div class="ch4-domain-tags">
+              <span class="ch4-tag">Predictive Modelling</span>
+              <span class="ch4-tag">Feature Engineering</span>
+              <span class="ch4-tag">Model Evaluation</span>
+              <span class="ch4-tag">Supervised Learning</span>
+              <span class="ch4-tag">Applied Machine Learning</span>
+            </div>
+            <p class="ch4-domain-desc">
+              Building predictive systems that balance performance and practical impact.
+            </p>
+          </div>
+          <div class="ch4-domain-accent ch4-accent-02" aria-hidden="true"></div>
+        </article>
+
+        <!-- Domain 03: Product Development — LEFT -->
+        <article class="ch4-domain ch4-domain-left ch4-reveal" aria-label="Product Development">
+          <div class="ch4-domain-inner">
+            <div class="ch4-domain-header">
+              <span class="ch4-domain-num">03</span>
+              <h3 class="ch4-domain-title">Product Development</h3>
+            </div>
+            <div class="ch4-domain-tags">
+              <span class="ch4-tag">Python</span>
+              <span class="ch4-tag">Streamlit</span>
+              <span class="ch4-tag">Web Applications</span>
+              <span class="ch4-tag">REST APIs</span>
+              <span class="ch4-tag">Git &amp; GitHub</span>
+              <span class="ch4-tag">UI/UX Prototyping</span>
+            </div>
+            <p class="ch4-domain-desc">
+              Turning ideas into products through practical engineering and user-focused design.
+            </p>
+          </div>
+          <div class="ch4-domain-accent ch4-accent-03" aria-hidden="true"></div>
+        </article>
+
+      </div>
+
+      <!-- The Toolbox -->
+      <div class="ch4-toolbox">
+        <header class="ch4-toolbox-header">
+          <span class="font-small highlight-gold ch4-reveal">THE TOOLBOX</span>
+          <h3 class="ch4-toolbox-subtitle ch4-reveal">The technologies behind the work.</h3>
+        </header>
+
+        <div class="ch4-toolbox-grid">
+          <!-- Group 01 -->
+          <div class="ch4-toolbox-group ch4-reveal">
+            <h4 class="ch4-toolbox-group-title">Data &amp; Analytics</h4>
+            <div class="ch4-domain-tags">
+              <span class="ch4-tag">Python</span>
+              <span class="ch4-tag">Pandas</span>
+              <span class="ch4-tag">NumPy</span>
+              <span class="ch4-tag">Matplotlib</span>
+              <span class="ch4-tag">Plotly</span>
+              <span class="ch4-tag">Jupyter Notebook</span>
+            </div>
+          </div>
+
+          <!-- Group 02 -->
+          <div class="ch4-toolbox-group ch4-reveal">
+            <h4 class="ch4-toolbox-group-title">Development</h4>
+            <div class="ch4-domain-tags">
+              <span class="ch4-tag">Streamlit</span>
+              <span class="ch4-tag">REST APIs</span>
+              <span class="ch4-tag">Git</span>
+              <span class="ch4-tag">GitHub</span>
+              <span class="ch4-tag">MySQL</span>
+              <span class="ch4-tag">VS Code</span>
+            </div>
+          </div>
+
+          <!-- Group 03 -->
+          <div class="ch4-toolbox-group ch4-reveal">
+            <h4 class="ch4-toolbox-group-title">Workflow &amp; Design</h4>
+            <div class="ch4-domain-tags">
+              <span class="ch4-tag">Data Cleaning</span>
+              <span class="ch4-tag">Data Visualization</span>
+              <span class="ch4-tag">Dashboard Design</span>
+              <span class="ch4-tag">UI/UX Prototyping</span>
+              <span class="ch4-tag">Project Documentation</span>
+              <span class="ch4-tag">Version Control</span>
+            </div>
+          </div>
         </div>
-        <span class="name-right anim-entry" data-delay="800">Sharma</span>
       </div>
 
-      <div class="portrait-stage" data-portrait-stage>
-        <div class="golden-arc" aria-hidden="true"></div>
-        <picture>
-          <source media="(max-width: 768px)" srcset="assets/images/portrait-primary-mobile.webp" type="image/webp" />
-          <source srcset="assets/images/portrait-primary.webp" type="image/webp" />
-          <img class="portrait portrait-base anim-entry" data-delay="500" src="assets/images/portrait-primary.png"
-            alt="Shubham Sharma Portrait" fetchpriority="high" decoding="sync" />
-        </picture>
-        <picture>
-          <source media="(max-width: 768px)" srcset="assets/images/portrait-reveal-mobile.webp" type="image/webp" />
-          <source srcset="assets/images/portrait-reveal.webp" type="image/webp" />
-          <img class="portrait portrait-reveal" src="assets/images/portrait-reveal.png" alt="" aria-hidden="true" loading="lazy" />
-        </picture>
-        <div class="reveal-aura" aria-hidden="true"></div>
-        <div class="ch1-spark" id="ch1-spark" aria-hidden="true"></div>
+      <!-- Currently Exploring -->
+      <div class="ch4-exploring">
+        <span class="ch4-exploring-label ch4-reveal">CURRENTLY EXPLORING</span>
+        <div class="ch4-exploring-rule ch4-reveal" aria-hidden="true"></div>
+        <ul class="ch4-exploring-list">
+          <li class="ch4-exploring-item ch4-reveal">Full Stack Development</li>
+          <li class="ch4-exploring-item ch4-reveal">System Design Fundamentals</li>
+          <li class="ch4-exploring-item ch4-reveal">Open Source Contributions</li>
+          <li class="ch4-exploring-item ch4-reveal">Advanced Machine Learning</li>
+        </ul>
       </div>
 
-      <!-- Cinematic text threshold bridge -->
-      <div class="cinematic-bridge" aria-hidden="true">
-        <p class="bridge-text">
-          “Curiosity came first. Everything else followed.”
-        </p>
-      </div>
-
-      <div class="chapter-mark anim-entry" data-delay="1000">
-        <p>Chapter I</p>
-        <h1 id="hero-title">
-          <span class="title-learner">The Learner</span>
-          <span class="title-builder">The Builder</span>
-        </h1>
-      </div>
-
-
-      <a class="scroll-cue anim-entry" data-delay="1400" href="#journey" aria-label="Scroll to begin the journey">
-        <span>Begin the journey</span>
-        <i></i>
-      </a>
     </section>
-  </div>
 
-  <!-- ═══════════════════════════════════ -->
-  <!-- CHAPTER II : THE JOURNEY           -->
-  <!-- ═══════════════════════════════════ -->
-  <div id="journey-wrapper" class="ch2-wrapper-outer">
-    <div id="journey" class="ch2-container">
-      <div class="ch2-topo-bg ch2-topo-far" aria-hidden="true"></div>
-      <div class="ch2-topo-bg ch2-topo-near" aria-hidden="true"></div>
-      <!-- Atmospheric Aurora Glows -->
-      <div class="ch2-ambient-aurora ch2-aurora-blue" aria-hidden="true"></div>
-      <div class="ch2-ambient-aurora ch2-aurora-amber" aria-hidden="true"></div>
+    <!-- ═══════════════════════════════════ -->
+    <!-- CHAPTER V : BEYOND THE PROJECTS    -->
+    <!-- ═══════════════════════════════════ -->
+    <section id="chapter-5" class="ch5-section" aria-labelledby="ch5-title">
+      <div class="grain" aria-hidden="true"></div>
 
-      <!-- Viewport 2: CHAPTER II entry labels -->
-      <section class="ch2-intro-scene" id="ch2-intro" aria-label="Chapter Intro">
-        <div class="ch2-intro-content">
-          <span class="font-tiny">Chapter II</span>
-          <h2 class="font-massive text-white">The<br />Journey</h2>
-        </div>
-      </section>
-
-      <!-- The Living Golden Thread Path Container -->
-      <section class="ch2-path-scene" id="ch2-path-scene" aria-label="Interactive Journey Path">
-        <div class="ch2-path-scroll-wrapper" id="path-scroll-wrapper">
-          <svg class="ch2-svg-path" viewBox="0 0 1000 1000" preserveAspectRatio="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#f3d078" />
-                <stop offset="50%" stop-color="#d4a44d" />
-                <stop offset="100%" stop-color="#8a6421" />
-              </linearGradient>
-              <filter id="organic-glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" result="noise" />
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"
-                  result="displaced" />
-                <feGaussianBlur in="displaced" stdDeviation="5" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="displaced" />
-                </feMerge>
-              </filter>
-              <filter id="organic-intense-glow" x="-100%" y="-100%" width="300%" height="300%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="3" result="noise" />
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G"
-                  result="displaced" />
-                <feGaussianBlur in="displaced" stdDeviation="12" result="blur1" />
-                <feGaussianBlur in="displaced" stdDeviation="5" result="blur2" />
-                <feMerge>
-                  <feMergeNode in="blur1" />
-                  <feMergeNode in="blur2" />
-                  <feMergeNode in="displaced" />
-                </feMerge>
-              </filter>
-            </defs>
-
-            <!-- Winding Golden Path (Active progressive drawing layer) -->
-            <path id="journey-path"
-              d="M 500 100 C 500 220, 320 220, 320 360 C 320 500, 680 500, 680 640 C 680 780, 500 780, 500 900"
-              stroke="url(#gold-gradient)" stroke-width="2" fill="none" filter="url(#organic-glow)" />
-
-            <!-- Destination Node -->
-            <circle cx="500" cy="900" r="10" class="ch2-node-dot destination-node" id="dot-destination" />
-
-            <!-- The Glowing Lead Node (Traveler) -->
-            <circle id="glowing-node" cx="500" cy="100" r="8" fill="#d4a44d" filter="url(#glow)" />
-          </svg>
-
-          <!-- Particle flow canvas -->
-          <canvas id="ch2-canvas" class="ch2-canvas" width="1000" height="1000" aria-hidden="true"></canvas>
-
-          <!-- Floating questions (Scene 3) -->
-          <div class="ch2-floater ch2-question" style="left: 200px; top: 300px;">HOW DOES THIS WORK?</div>
-          <div class="ch2-floater ch2-question" style="left: 650px; top: 420px;">CAN I BUILD THIS?</div>
-          <div class="ch2-floater ch2-question" style="left: 350px; top: 580px;">WHAT IF I FAIL?</div>
-          <div class="ch2-floater ch2-question" style="left: 800px; top: 700px;">WHAT IF IT WORKS?</div>
-        </div>
-      </section>
-
-
-      <!-- Climax Scene Overlay -->
-      <div id="turning-point" class="ch2-climax-overlay">
-        <div class="climax-inner">
-          <span class="turning-line-consume">I Stopped Consuming.</span>
-          <span class="turning-line-build">I Started Building.</span>
-        </div>
-      </div>
-
-      <!-- Destination Exit Scene Overlay -->
-      <div id="exit" class="ch2-exit-overlay">
-        <span class="font-tiny">Next Chapter</span>
-        <h2 id="chapter-3" class="font-massive highlight-gold clickable-portal">The Work</h2>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════ -->
-  <!-- CHAPTER III : THE BUILDER          -->
-  <!-- ═══════════════════════════════════ -->
-  <div id="chapter-3-section" class="ch3-wrapper">
-    <div class="grain" aria-hidden="true"></div>
-    <div class="ch3-layout-grid">
-      <!-- LEFT PANEL: PROJECT INDEX -->
-      <aside class="ch3-left-panel">
-        <header class="ch3-header-editorial">
-          <span class="font-small highlight-gold">Chapter III</span>
-          <h2 class="font-large text-white">The Builder</h2>
-          <span class="font-tiny highlight-gold">The Work</span>
-        </header>
-
-        <!-- Vertical Timeline List -->
-        <nav class="ch3-index-nav" aria-label="Projects Archive">
-          <div class="ch3-timeline-line" aria-hidden="true">
-            <div class="ch3-active-glow-node" id="active-glow-node"></div>
-          </div>
-          <ul class="ch3-project-list" id="project-list-container">
-            <!-- Dynamic project list items go here -->
-          </ul>
-        </nav>
-
-        <footer class="ch3-left-footer">
-          <div class="ch3-footer-spark" aria-hidden="true">✦</div>
-          <div class="ch3-footer-content">
-            <span class="font-tiny">EXPLORING • BUILDING • IMPACTING</span>
-            <p>Turning concepts into meaningful products.</p>
-          </div>
-        </footer>
-      </aside>
-
-      <!-- RIGHT PANEL: DYNAMIC SHOWCASE -->
-      <main class="ch3-right-panel">
-        <div class="ch3-showcase-container" id="project-showcase-card">
-          <!-- Dynamic showcase content gets injected here -->
-        </div>
-      </main>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════ -->
-  <!-- CHAPTER IV : THE THINKER           -->
-  <!-- ═══════════════════════════════════ -->
-  <section id="chapter-4" class="ch4-section" aria-labelledby="ch4-title">
-    <div class="grain" aria-hidden="true"></div>
-
-    <!-- Ambient background glows -->
-    <div class="ch4-ambient ch4-ambient-left" aria-hidden="true"></div>
-    <div class="ch4-ambient ch4-ambient-right" aria-hidden="true"></div>
-
-    <!-- Section Header -->
-    <header class="ch4-header">
-      <span class="font-small highlight-gold ch4-reveal">Chapter IV</span>
-      <div class="ch4-rule ch4-reveal" aria-hidden="true"></div>
-      <h2 id="ch4-title" class="ch4-headline ch4-reveal">
-        <span class="ch4-headline-plain">Ideas are easy.</span><br>
-        <span class="ch4-headline-gold">Execution is everything.</span>
-      </h2>
-      <div class="ch4-diamond ch4-reveal" aria-hidden="true">✦</div>
-      <p class="ch4-intro ch4-reveal">
-        I enjoy working at the intersection of data, technology, and problem-solving.<br>
-        Whether I'm analyzing complex datasets, building predictive models, or developing&nbsp;products,<br>
-        my focus is always on creating practical solutions that deliver real-world value.
-      </p>
-    </header>
-
-    <!-- Capability Domains -->
-    <div class="ch4-domains">
-
-      <!-- Domain 01: Analytics & Insights — LEFT -->
-      <article class="ch4-domain ch4-domain-left ch4-reveal" aria-label="Analytics and Insights">
-        <div class="ch4-domain-inner">
-          <div class="ch4-domain-header">
-            <span class="ch4-domain-num">01</span>
-            <h3 class="ch4-domain-title">Analytics &amp; Insights</h3>
-          </div>
-          <div class="ch4-domain-tags">
-            <span class="ch4-tag">Data Analysis</span>
-            <span class="ch4-tag">Exploratory Data Analysis</span>
-            <span class="ch4-tag">Statistical Analysis</span>
-            <span class="ch4-tag">Data Visualization</span>
-            <span class="ch4-tag">Dashboard Design</span>
-            <span class="ch4-tag">Time Series Forecasting</span>
-          </div>
-          <p class="ch4-domain-desc">
-            Turning data into actionable insights through analysis and storytelling.
-          </p>
-        </div>
-        <div class="ch4-domain-accent ch4-accent-01" aria-hidden="true"></div>
-      </article>
-
-      <!-- Domain 02: Machine Learning — RIGHT -->
-      <article class="ch4-domain ch4-domain-right ch4-reveal" aria-label="Machine Learning">
-        <div class="ch4-domain-inner">
-          <div class="ch4-domain-header">
-            <span class="ch4-domain-num">02</span>
-            <h3 class="ch4-domain-title">Machine Learning</h3>
-          </div>
-          <div class="ch4-domain-tags">
-            <span class="ch4-tag">Predictive Modelling</span>
-            <span class="ch4-tag">Feature Engineering</span>
-            <span class="ch4-tag">Model Evaluation</span>
-            <span class="ch4-tag">Supervised Learning</span>
-            <span class="ch4-tag">Applied Machine Learning</span>
-          </div>
-          <p class="ch4-domain-desc">
-            Building predictive systems that balance performance and practical impact.
-          </p>
-        </div>
-        <div class="ch4-domain-accent ch4-accent-02" aria-hidden="true"></div>
-      </article>
-
-      <!-- Domain 03: Product Development — LEFT -->
-      <article class="ch4-domain ch4-domain-left ch4-reveal" aria-label="Product Development">
-        <div class="ch4-domain-inner">
-          <div class="ch4-domain-header">
-            <span class="ch4-domain-num">03</span>
-            <h3 class="ch4-domain-title">Product Development</h3>
-          </div>
-          <div class="ch4-domain-tags">
-            <span class="ch4-tag">Python</span>
-            <span class="ch4-tag">Streamlit</span>
-            <span class="ch4-tag">Web Applications</span>
-            <span class="ch4-tag">REST APIs</span>
-            <span class="ch4-tag">Git &amp; GitHub</span>
-            <span class="ch4-tag">UI/UX Prototyping</span>
-          </div>
-          <p class="ch4-domain-desc">
-            Turning ideas into products through practical engineering and user-focused design.
-          </p>
-        </div>
-        <div class="ch4-domain-accent ch4-accent-03" aria-hidden="true"></div>
-      </article>
-
-    </div>
-
-    <!-- The Toolbox -->
-    <div class="ch4-toolbox">
-      <header class="ch4-toolbox-header">
-        <span class="font-small highlight-gold ch4-reveal">THE TOOLBOX</span>
-        <h3 class="ch4-toolbox-subtitle ch4-reveal">The technologies behind the work.</h3>
-      </header>
-      
-      <div class="ch4-toolbox-grid">
-        <!-- Group 01 -->
-        <div class="ch4-toolbox-group ch4-reveal">
-          <h4 class="ch4-toolbox-group-title">Data &amp; Analytics</h4>
-          <div class="ch4-domain-tags">
-            <span class="ch4-tag">Python</span>
-            <span class="ch4-tag">Pandas</span>
-            <span class="ch4-tag">NumPy</span>
-            <span class="ch4-tag">Matplotlib</span>
-            <span class="ch4-tag">Plotly</span>
-            <span class="ch4-tag">Jupyter Notebook</span>
-          </div>
-        </div>
-
-        <!-- Group 02 -->
-        <div class="ch4-toolbox-group ch4-reveal">
-          <h4 class="ch4-toolbox-group-title">Development</h4>
-          <div class="ch4-domain-tags">
-            <span class="ch4-tag">Streamlit</span>
-            <span class="ch4-tag">REST APIs</span>
-            <span class="ch4-tag">Git</span>
-            <span class="ch4-tag">GitHub</span>
-            <span class="ch4-tag">MySQL</span>
-            <span class="ch4-tag">VS Code</span>
-          </div>
-        </div>
-
-        <!-- Group 03 -->
-        <div class="ch4-toolbox-group ch4-reveal">
-          <h4 class="ch4-toolbox-group-title">Workflow &amp; Design</h4>
-          <div class="ch4-domain-tags">
-            <span class="ch4-tag">Data Cleaning</span>
-            <span class="ch4-tag">Data Visualization</span>
-            <span class="ch4-tag">Dashboard Design</span>
-            <span class="ch4-tag">UI/UX Prototyping</span>
-            <span class="ch4-tag">Project Documentation</span>
-            <span class="ch4-tag">Version Control</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Currently Exploring -->
-    <div class="ch4-exploring">
-      <span class="ch4-exploring-label ch4-reveal">CURRENTLY EXPLORING</span>
-      <div class="ch4-exploring-rule ch4-reveal" aria-hidden="true"></div>
-      <ul class="ch4-exploring-list">
-        <li class="ch4-exploring-item ch4-reveal">Full Stack Development</li>
-        <li class="ch4-exploring-item ch4-reveal">System Design Fundamentals</li>
-        <li class="ch4-exploring-item ch4-reveal">Open Source Contributions</li>
-        <li class="ch4-exploring-item ch4-reveal">Advanced Machine Learning</li>
-      </ul>
-    </div>
-
-  </section>
-
-  <!-- ═══════════════════════════════════ -->
-  <!-- CHAPTER V : BEYOND THE PROJECTS    -->
-  <!-- ═══════════════════════════════════ -->
-  <section id="chapter-5" class="ch5-section" aria-labelledby="ch5-title">
-    <div class="grain" aria-hidden="true"></div>
-
-    <!-- Section Header -->
-    <header class="ch5-header">
-      <span class="font-small highlight-gold ch5-reveal">Chapter V</span>
-      <div class="ch5-rule ch5-reveal" aria-hidden="true"></div>
-      <h2 id="ch5-title" class="ch5-headline ch5-reveal">
-        <span class="ch5-headline-plain">Beyond the</span><br>
-        <span class="ch5-headline-gold">Projects.</span>
-      </h2>
-      <div class="ch5-diamond ch5-reveal" aria-hidden="true">✦</div>
-      <p class="ch5-intro ch5-reveal">
-        The experiences that shaped the way I learn, compete, and grow.
-      </p>
-    </header>
-
-    <div class="ch5-content-grid">
-      
-      <!-- 01 THE COMPETITOR -->
-      <article class="ch5-block ch5-reveal">
-        <header class="ch5-block-header">
-          <span class="ch5-block-num">01</span>
-          <h3 class="ch5-block-title">The Competitor</h3>
-        </header>
-        <div class="ch5-block-body">
-          <p class="ch5-p">Before projects, analytics, and software development, there was competition.</p>
-          <p class="ch5-p">I spent several years competing in Taekwondo during school and participated in multiple state-level tournaments. One of my strongest memories is my first competitive match in Gurugram.</p>
-          <p class="ch5-p">My opponent was significantly larger than me. It was my first match. It was also my first gold medal.</p>
-          <p class="ch5-p highlight-gold ch5-quote">That experience taught me something I still carry today: Confidence often comes after taking action, not before it.</p>
-          <div class="ch5-tags-inline">
-            <span class="ch5-tag">Multiple Gold Medals</span>
-            <span class="ch5-tag">Silver &amp; Bronze Medals</span>
-            <span class="ch5-tag">State-Level Participation</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- 02 THE LEARNER -->
-      <article class="ch5-block ch5-reveal">
-        <header class="ch5-block-header">
-          <span class="ch5-block-num">02</span>
-          <h3 class="ch5-block-title">The Learner</h3>
-        </header>
-        <div class="ch5-block-body">
-          <p class="ch5-p">When I started my first year of Computer Science, I had almost no understanding of programming. I didn't know Python. I didn't know C++. I didn't know how software projects were built.</p>
-          <p class="ch5-p">Over time I moved from building simple coursework projects to creating analytics case studies, machine learning projects, and full product experiences.</p>
-          <p class="ch5-p">Some of my biggest growth came from revisiting older projects and rebuilding them with better thinking, stronger analysis, and improved execution.</p>
-          <p class="ch5-p highlight-gold ch5-quote">Progress over perfection. Learning through iteration. Learning through curiosity. Learning through building.</p>
-          <p class="ch5-p ch5-muted">I primarily learn through project-based experimentation, YouTube, note-taking, and AI-assisted development workflows.</p>
-        </div>
-      </article>
-
-      <!-- 03 REAL-WORLD EXPOSURE -->
-      <article class="ch5-block ch5-reveal">
-        <header class="ch5-block-header">
-          <span class="ch5-block-num">03</span>
-          <h3 class="ch5-block-title">Real-World Exposure</h3>
-        </header>
-        <div class="ch5-block-body">
-          <p class="ch5-p ch5-muted">4 Virtual Experience Programs</p>
-          
-          <div class="ch5-experience-list">
-            <div class="ch5-experience-item">
-              <h4 class="ch5-exp-title">British Airways — Data Science Job Simulation</h4>
-              <p class="ch5-exp-desc">Built predictive models and explored customer booking behaviour using machine learning workflows.</p>
-              <a href="https://www.theforage.com/completion-certificates/ifobHAoMjQs9s6bKS/gMTdCXwDdLYoXZ3wG_ifobHAoMjQs9s6bKS_fnvLtjt3ricccg8RB_1779855219703_completion_certificate.pdf" target="_blank" rel="noopener" class="ch5-link-button">View Credential <span>→</span></a>
-            </div>
-
-            <div class="ch5-experience-item">
-              <h4 class="ch5-exp-title">Tata iQ — GenAI Powered Data Analytics</h4>
-              <p class="ch5-exp-desc">Learned how technical AI insights must be translated into business decisions and actionable recommendations.</p>
-              <a href="https://www.theforage.com/completion-certificates/tMjbs76F526fF5v3G/NjynCWzGSaWXQCxSX_tMjbs76F526fF5v3G_fnvLtjt3ricccg8RB_1779475118553_completion_certificate.pdf" target="_blank" rel="noopener" class="ch5-link-button">View Credential <span>→</span></a>
-            </div>
-
-            <div class="ch5-experience-item">
-              <h4 class="ch5-exp-title">JPMorgan Chase &amp; Co. — Software Engineering Job Simulation</h4>
-              <p class="ch5-exp-desc">Explored agile methodologies and open-source data visualization tools for financial data.</p>
-              <a href="https://www.theforage.com/completion-certificates/pmnMSL4QiQ9JCgE3W/kkE9HyeNcw6rwCRGw_pmnMSL4QiQ9JCgE3W_fnvLtjt3ricccg8RB_1752345369984_completion_certificate.pdf" target="_blank" rel="noopener" class="ch5-link-button">View Credential <span>→</span></a>
-            </div>
-
-            <div class="ch5-experience-item">
-              <h4 class="ch5-exp-title">Deloitte — Technology Consulting Virtual Internship</h4>
-              <p class="ch5-exp-desc">Designed interactive dashboards to communicate key business insights to stakeholders.</p>
-              <a href="https://www.theforage.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_fnvLtjt3ricccg8RB_1752306305763_completion_certificate.pdf" target="_blank" rel="noopener" class="ch5-link-button">View Credential <span>→</span></a>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 04 MY VOICE BEYOND TECHNOLOGY -->
-      <article class="ch5-block ch5-reveal">
-        <header class="ch5-block-header">
-          <span class="ch5-block-num">04</span>
-          <h3 class="ch5-block-title">My Voice Beyond Tech</h3>
-        </header>
-        <div class="ch5-block-body ch5-articles">
-          <div class="ch5-article-item">
-            <h4 class="ch5-article-title">Your Phone Is Training AI (And You Didn't Even Know It)</h4>
-            <p class="ch5-article-desc">Exploring how everyday smartphone activity contributes to modern AI systems.</p>
-            <a href="https://medium.com/@shubhamsharma99918/your-phone-is-training-ai-and-you-didnt-even-know-it-03ba96ac9e36" target="_blank" rel="noopener" class="ch5-link-button">Read Article <span>→</span></a>
-          </div>
-
-          <div class="ch5-article-item">
-            <h4 class="ch5-article-title">How Leadership and Motivation Shape Workplace Performance</h4>
-            <p class="ch5-article-desc">A reflection on leadership, motivation, and their impact on organizational performance.</p>
-            <a href="https://medium.com/@shubhamsharma99918/how-leadership-and-motivation-shape-workplace-performance-fe26c0d0d41d" target="_blank" rel="noopener" class="ch5-link-button">Read Article <span>→</span></a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 05 CONTINUOUS LEARNING -->
-      <article class="ch5-block ch5-reveal">
-        <header class="ch5-block-header">
-          <span class="ch5-block-num">05</span>
-          <h3 class="ch5-block-title">Continuous Learning</h3>
-        </header>
-        <div class="ch5-block-body ch5-relative-body">
-          <div class="ch5-cert-list">
-            <div class="ch5-cert-item">
-              <h4 class="ch5-cert-title">IBM AI Workflow: Data Analysis and Hypothesis Testing</h4>
-              <p class="ch5-cert-org">Coursera</p>
-            </div>
-            <div class="ch5-cert-item">
-              <h4 class="ch5-cert-title">IBM Databases and SQL for Data Science with Python</h4>
-              <p class="ch5-cert-org">Coursera</p>
-            </div>
-            <div class="ch5-cert-item">
-              <h4 class="ch5-cert-title">Data Visualization</h4>
-              <p class="ch5-cert-org">Coursera</p>
-            </div>
-            <div class="ch5-cert-item">
-              <h4 class="ch5-cert-title">Python for Time Series Data Analysis</h4>
-              <p class="ch5-cert-org">Udemy</p>
-            </div>
-            <div class="ch5-cert-item">
-              <h4 class="ch5-cert-title">CUDA C++ Certificate of Competency</h4>
-              <p class="ch5-cert-org">NVIDIA</p>
-            </div>
-          </div>
-
-          <details class="ch5-details-drawer ch5-drawer-top-right">
-            <summary class="ch5-details-summary">View All Credentials</summary>
-            <div class="ch5-details-content">
-              <a href="https://coursera.org/verify/8PR3K2MX9GG5" target="_blank" rel="noopener" class="ch5-link-text">IBM AI Workflow: Data Analysis and Hypothesis Testing</a>
-              <a href="https://coursera.org/verify/RBU7KU5PZP84" target="_blank" rel="noopener" class="ch5-link-text">IBM Databases and SQL for Data Science with Python</a>
-              <a href="https://coursera.org/verify/BBS7L7P8WHIU" target="_blank" rel="noopener" class="ch5-link-text">Data Visualization</a>
-              <a href="https://www.udemy.com/certificate/UC-d01d601b-8826-41dc-9c9a-e3ba52350394/" target="_blank" rel="noopener" class="ch5-link-text">Python for Time Series Data Analysis</a>
-              <span class="ch5-link-text ch5-muted-text">NVIDIA CUDA C++ Certificate of Competency <br><i>(Credential Available Upon Request)</i></span>
-            </div>
-          </details>
-        </div>
-      </article>
-
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════ -->
-  <!-- CHAPTER VI : THE FINAL PAGE        -->
-  <!-- ═══════════════════════════════════ -->
-  <section id="chapter-6" class="ch6-section" aria-label="The Final Page">
-    <!-- Full screen background image with overlay -->
-    <div class="ch6-bg" aria-hidden="true"></div>
-    <div class="ch6-overlay" aria-hidden="true"></div>
-
-    <div class="ch6-container">
-      
-      <!-- Stage 1: The Intro -->
-      <header class="ch6-stage ch6-stage-1 ch6-reveal">
-        <span class="font-small highlight-gold">Chapter VI</span>
-        <div class="ch5-rule" aria-hidden="true"></div>
-        <h2 class="ch5-headline">
-          <span class="ch5-headline-plain">The Best</span><br>
-          <span class="ch5-headline-gold">Part?</span>
+      <!-- Section Header -->
+      <header class="ch5-header">
+        <span class="font-small highlight-gold ch5-reveal">Chapter V</span>
+        <div class="ch5-rule ch5-reveal" aria-hidden="true"></div>
+        <h2 id="ch5-title" class="ch5-headline ch5-reveal">
+          <span class="ch5-headline-plain">Beyond the</span><br>
+          <span class="ch5-headline-gold">Projects.</span>
         </h2>
-        <div class="ch5-diamond" aria-hidden="true">✦</div>
+        <div class="ch5-diamond ch5-reveal" aria-hidden="true">✦</div>
+        <p class="ch5-intro ch5-reveal">
+          The experiences that shaped the way I learn, compete, and grow.
+        </p>
       </header>
 
-      <!-- Stage 2: The Journey Statement -->
-      <div class="ch6-stage ch6-stage-2 ch6-reveal">
-        <h2 class="ch6-text-main">Not knowing what Python was</h2>
-        <div class="ch6-arrow">↓</div>
-        <h2 class="ch6-text-main">Building products,<br>analytics systems,<br>and experiences.</h2>
-      </div>
+      <div class="ch5-content-grid">
 
-      <!-- Stage 3: Reflection Block -->
-      <div class="ch6-stage ch6-stage-3 ch6-reveal">
-        <p class="ch6-reflection-text">
-          Three years ago,<br>
-          I entered Computer Science with curiosity and very little understanding of programming.
-        </p>
-        <p class="ch6-reflection-text">
-          Today,<br>
-          I've built analytics projects, machine learning systems, and products that solve real problems.
-        </p>
-        <p class="ch6-reflection-text ch6-highlight-text">
-          I'm still learning.<br>
-          And that's exactly the point.
-        </p>
-      </div>
+        <!-- 01 THE COMPETITOR -->
+        <article class="ch5-block ch5-reveal">
+          <header class="ch5-block-header">
+            <span class="ch5-block-num">01</span>
+            <h3 class="ch5-block-title">The Competitor</h3>
+          </header>
+          <div class="ch5-block-body">
+            <p class="ch5-p">Before projects, analytics, and software development, there was competition.</p>
+            <p class="ch5-p">I spent several years competing in Taekwondo during school and participated in multiple
+              state-level tournaments. One of my strongest memories is my first competitive match in Gurugram.</p>
+            <p class="ch5-p">My opponent was significantly larger than me. It was my first match. It was also my first
+              gold medal.</p>
+            <p class="ch5-p highlight-gold ch5-quote">That experience taught me something I still carry today:
+              Confidence often comes after taking action, not before it.</p>
+            <div class="ch5-tags-inline">
+              <span class="ch5-tag">Multiple Gold Medals</span>
+              <span class="ch5-tag">Silver &amp; Bronze Medals</span>
+              <span class="ch5-tag">State-Level Participation</span>
+            </div>
+          </div>
+        </article>
 
-      <!-- Stage 4: Final Statement -->
-      <div class="ch6-stage ch6-stage-4 ch6-reveal">
-        <h3 class="ch6-final-statement">The best part?</h3>
-        <h2 class="ch6-final-climax">I'm just getting started.</h2>
-      </div>
+        <!-- 02 THE LEARNER -->
+        <article class="ch5-block ch5-reveal">
+          <header class="ch5-block-header">
+            <span class="ch5-block-num">02</span>
+            <h3 class="ch5-block-title">The Learner</h3>
+          </header>
+          <div class="ch5-block-body">
+            <p class="ch5-p">When I started my first year of Computer Science, I had almost no understanding of
+              programming. I didn't know Python. I didn't know C++. I didn't know how software projects were built.</p>
+            <p class="ch5-p">Over time I moved from building simple coursework projects to creating analytics case
+              studies, machine learning projects, and full product experiences.</p>
+            <p class="ch5-p">Some of my biggest growth came from revisiting older projects and rebuilding them with
+              better thinking, stronger analysis, and improved execution.</p>
+            <p class="ch5-p highlight-gold ch5-quote">Progress over perfection. Learning through iteration. Learning
+              through curiosity. Learning through building.</p>
+            <p class="ch5-p ch5-muted">I primarily learn through project-based experimentation, YouTube, note-taking,
+              and AI-assisted development workflows.</p>
+          </div>
+        </article>
 
-      <!-- Stage 5: Connection & Signature -->
-      <div class="ch6-stage ch6-stage-5 ch6-reveal">
-        <h3 class="ch6-connect-title">Let's Build Something Meaningful</h3>
-        
-        <div class="ch6-action-buttons">
-          <a href="Resume.pdf" target="_blank" rel="noopener" class="ch6-glass-btn" aria-label="View Resume">Resume</a>
-          <a href="https://github.com/ShubhamSnSharma" target="_blank" rel="noopener" class="ch6-glass-btn" aria-label="Visit GitHub Profile">GitHub</a>
-          <a href="https://www.linkedin.com/in/shubhamsnsharma" target="_blank" rel="noopener" class="ch6-glass-btn" aria-label="Visit LinkedIn Profile">LinkedIn</a>
-          <a href="mailto:shubhamsnsharma@gmail.com" class="ch6-glass-btn" aria-label="Send an Email">Email</a>
+        <!-- 03 REAL-WORLD EXPOSURE -->
+        <article class="ch5-block ch5-reveal">
+          <header class="ch5-block-header">
+            <span class="ch5-block-num">03</span>
+            <h3 class="ch5-block-title">Real-World Exposure</h3>
+          </header>
+          <div class="ch5-block-body">
+            <p class="ch5-p ch5-muted">4 Virtual Experience Programs</p>
+
+            <div class="ch5-experience-list">
+              <div class="ch5-experience-item">
+                <h4 class="ch5-exp-title">British Airways — Data Science Job Simulation</h4>
+                <p class="ch5-exp-desc">Built predictive models and explored customer booking behaviour using machine
+                  learning workflows.</p>
+                <a href="https://www.theforage.com/completion-certificates/ifobHAoMjQs9s6bKS/gMTdCXwDdLYoXZ3wG_ifobHAoMjQs9s6bKS_fnvLtjt3ricccg8RB_1779855219703_completion_certificate.pdf"
+                  target="_blank" rel="noopener" class="ch5-link-button">View Credential <span>→</span></a>
+              </div>
+
+              <div class="ch5-experience-item">
+                <h4 class="ch5-exp-title">Tata iQ — GenAI Powered Data Analytics</h4>
+                <p class="ch5-exp-desc">Learned how technical AI insights must be translated into business decisions and
+                  actionable recommendations.</p>
+                <a href="https://www.theforage.com/completion-certificates/tMjbs76F526fF5v3G/NjynCWzGSaWXQCxSX_tMjbs76F526fF5v3G_fnvLtjt3ricccg8RB_1779475118553_completion_certificate.pdf"
+                  target="_blank" rel="noopener" class="ch5-link-button">View Credential <span>→</span></a>
+              </div>
+
+              <div class="ch5-experience-item">
+                <h4 class="ch5-exp-title">JPMorgan Chase &amp; Co. — Software Engineering Job Simulation</h4>
+                <p class="ch5-exp-desc">Explored agile methodologies and open-source data visualization tools for
+                  financial data.</p>
+                <a href="https://www.theforage.com/completion-certificates/pmnMSL4QiQ9JCgE3W/kkE9HyeNcw6rwCRGw_pmnMSL4QiQ9JCgE3W_fnvLtjt3ricccg8RB_1752345369984_completion_certificate.pdf"
+                  target="_blank" rel="noopener" class="ch5-link-button">View Credential <span>→</span></a>
+              </div>
+
+              <div class="ch5-experience-item">
+                <h4 class="ch5-exp-title">Deloitte — Technology Consulting Virtual Internship</h4>
+                <p class="ch5-exp-desc">Designed interactive dashboards to communicate key business insights to
+                  stakeholders.</p>
+                <a href="https://www.theforage.com/completion-certificates/9PBTqmSxAf6zZTseP/io9DzWKe3PTsiS6GG_9PBTqmSxAf6zZTseP_fnvLtjt3ricccg8RB_1752306305763_completion_certificate.pdf"
+                  target="_blank" rel="noopener" class="ch5-link-button">View Credential <span>→</span></a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 04 MY VOICE BEYOND TECHNOLOGY -->
+        <article class="ch5-block ch5-reveal">
+          <header class="ch5-block-header">
+            <span class="ch5-block-num">04</span>
+            <h3 class="ch5-block-title">My Voice Beyond Tech</h3>
+          </header>
+          <div class="ch5-block-body ch5-articles">
+            <div class="ch5-article-item">
+              <h4 class="ch5-article-title">Your Phone Is Training AI (And You Didn't Even Know It)</h4>
+              <p class="ch5-article-desc">Exploring how everyday smartphone activity contributes to modern AI systems.
+              </p>
+              <a href="https://medium.com/@shubhamsharma99918/your-phone-is-training-ai-and-you-didnt-even-know-it-03ba96ac9e36"
+                target="_blank" rel="noopener" class="ch5-link-button">Read Article <span>→</span></a>
+            </div>
+
+            <div class="ch5-article-item">
+              <h4 class="ch5-article-title">How Leadership and Motivation Shape Workplace Performance</h4>
+              <p class="ch5-article-desc">A reflection on leadership, motivation, and their impact on organizational
+                performance.</p>
+              <a href="https://medium.com/@shubhamsharma99918/how-leadership-and-motivation-shape-workplace-performance-fe26c0d0d41d"
+                target="_blank" rel="noopener" class="ch5-link-button">Read Article <span>→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 05 CONTINUOUS LEARNING -->
+        <article class="ch5-block ch5-reveal">
+          <header class="ch5-block-header">
+            <span class="ch5-block-num">05</span>
+            <h3 class="ch5-block-title">Continuous Learning</h3>
+          </header>
+          <div class="ch5-block-body ch5-relative-body">
+            <div class="ch5-cert-list">
+              <div class="ch5-cert-item">
+                <h4 class="ch5-cert-title">IBM AI Workflow: Data Analysis and Hypothesis Testing</h4>
+                <p class="ch5-cert-org">Coursera</p>
+              </div>
+              <div class="ch5-cert-item">
+                <h4 class="ch5-cert-title">IBM Databases and SQL for Data Science with Python</h4>
+                <p class="ch5-cert-org">Coursera</p>
+              </div>
+              <div class="ch5-cert-item">
+                <h4 class="ch5-cert-title">Data Visualization</h4>
+                <p class="ch5-cert-org">Coursera</p>
+              </div>
+              <div class="ch5-cert-item">
+                <h4 class="ch5-cert-title">Python for Time Series Data Analysis</h4>
+                <p class="ch5-cert-org">Udemy</p>
+              </div>
+              <div class="ch5-cert-item">
+                <h4 class="ch5-cert-title">CUDA C++ Certificate of Competency</h4>
+                <p class="ch5-cert-org">NVIDIA</p>
+              </div>
+            </div>
+
+            <details class="ch5-details-drawer ch5-drawer-top-right">
+              <summary class="ch5-details-summary">View All Credentials</summary>
+              <div class="ch5-details-content">
+                <a href="https://coursera.org/verify/8PR3K2MX9GG5" target="_blank" rel="noopener"
+                  class="ch5-link-text">IBM AI Workflow: Data Analysis and Hypothesis Testing</a>
+                <a href="https://coursera.org/verify/RBU7KU5PZP84" target="_blank" rel="noopener"
+                  class="ch5-link-text">IBM Databases and SQL for Data Science with Python</a>
+                <a href="https://coursera.org/verify/BBS7L7P8WHIU" target="_blank" rel="noopener"
+                  class="ch5-link-text">Data Visualization</a>
+                <a href="https://www.udemy.com/certificate/UC-d01d601b-8826-41dc-9c9a-e3ba52350394/" target="_blank"
+                  rel="noopener" class="ch5-link-text">Python for Time Series Data Analysis</a>
+                <span class="ch5-link-text ch5-muted-text">NVIDIA CUDA C++ Certificate of Competency <br><i>(Credential
+                    Available Upon Request)</i></span>
+              </div>
+            </details>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CHAPTER VI : THE FINAL PAGE        -->
+    <!-- ═══════════════════════════════════ -->
+    <section id="chapter-6" class="ch6-section" aria-label="The Final Page">
+      <!-- Full screen background image with overlay -->
+      <div class="ch6-bg" aria-hidden="true"></div>
+      <div class="ch6-overlay" aria-hidden="true"></div>
+
+      <div class="ch6-container">
+
+        <!-- Stage 1: The Intro -->
+        <header class="ch6-stage ch6-stage-1 ch6-reveal">
+          <span class="font-small highlight-gold">Chapter VI</span>
+          <div class="ch5-rule" aria-hidden="true"></div>
+          <h2 class="ch5-headline">
+            <span class="ch5-headline-plain">The Best</span><br>
+            <span class="ch5-headline-gold">Part?</span>
+          </h2>
+          <div class="ch5-diamond" aria-hidden="true">✦</div>
+        </header>
+
+        <!-- Stage 2: The Journey Statement -->
+        <div class="ch6-stage ch6-stage-2 ch6-reveal">
+          <h2 class="ch6-text-main">Not knowing what Python was</h2>
+          <div class="ch6-arrow">↓</div>
+          <h2 class="ch6-text-main">Building products,<br>analytics systems,<br>and experiences.</h2>
         </div>
 
-        <div class="ch6-signature">
-          Still learning.<br>
-          Still building.<br>
-          Still curious.<br>
-          <span class="ch6-sig-name">— Shubham Sharma</span>
+        <!-- Stage 3: Reflection Block -->
+        <div class="ch6-stage ch6-stage-3 ch6-reveal">
+          <p class="ch6-reflection-text">
+            Three years ago,<br>
+            I entered Computer Science with curiosity and very little understanding of programming.
+          </p>
+          <p class="ch6-reflection-text">
+            Today,<br>
+            I've built analytics projects, machine learning systems, and products that solve real problems.
+          </p>
+          <p class="ch6-reflection-text ch6-highlight-text">
+            I'm still learning.<br>
+            And that's exactly the point.
+          </p>
         </div>
+
+        <!-- Stage 4: Final Statement -->
+        <div class="ch6-stage ch6-stage-4 ch6-reveal">
+          <h3 class="ch6-final-statement">The best part?</h3>
+          <h2 class="ch6-final-climax">I'm just getting started.</h2>
+        </div>
+
+        <!-- Stage 5: Connection & Signature -->
+        <div class="ch6-stage ch6-stage-5 ch6-reveal">
+          <h3 class="ch6-connect-title">Let's Build Something Meaningful</h3>
+
+          <div class="ch6-action-buttons">
+            <a href="Resume.pdf" target="_blank" rel="noopener" class="ch6-glass-btn"
+              aria-label="View Resume">Resume</a>
+            <a href="https://github.com/ShubhamSnSharma" target="_blank" rel="noopener" class="ch6-glass-btn"
+              aria-label="Visit GitHub Profile">GitHub</a>
+            <a href="https://www.linkedin.com/in/shubhamsnsharma" target="_blank" rel="noopener" class="ch6-glass-btn"
+              aria-label="Visit LinkedIn Profile">LinkedIn</a>
+            <a href="mailto:shubhamsnsharma@gmail.com" class="ch6-glass-btn" aria-label="Send an Email">Email</a>
+          </div>
+
+          <div class="ch6-signature">
+            Still learning.<br>
+            Still building.<br>
+            Still curious.<br>
+            <span class="ch6-sig-name">— Shubham Sharma</span>
+          </div>
+        </div>
+
       </div>
+    </section>
 
-    </div>
-  </section>
+  </main>
 
-</main>
-
-<script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
-<script src="script.js?v=1.2"></script>
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js"></script>
+  <script src="script.js?v=1.2"></script>
 </body>
 <p>© 2026 Shubham Sharma • Crafted with code, curiosity, and creativity.</p>
 </html>

@@ -85,12 +85,93 @@ a {
 }
 
 /* ═══════════════════════════════════════════
+   CINEMATIC LOADER (PROLOGUE)
+   ═══════════════════════════════════════════ */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, rgba(20, 30, 45, 0.10) 0%, #080808 70%);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
+}
+
+#veil {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #080808;
+  pointer-events: none;
+}
+
+#prologue-label {
+  position: fixed;
+  top: clamp(24px, 4vh, 40px);
+  left: clamp(24px, 4vw, 44px);
+  z-index: 10001;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+
+#prologue-label.show {
+  opacity: 1;
+}
+
+.lbl {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 9px;
+  letter-spacing: 4px;
+  line-height: 1;
+}
+
+.lbl-num {
+  color: rgba(160, 115, 25, 0.30);
+}
+
+.lbl-word {
+  color: rgba(160, 115, 25, 0.22);
+  margin-top: 5px;
+}
+
+#phrase-svg-wrap {
+  width: min(75vw, 480px);
+}
+
+#phrase-svg {
+  width: 100%;
+  overflow: visible;
+  display: block;
+}
+
+/* ═══════════════════════════════════════════
    EXPERIENCE WRAPPER
    ═══════════════════════════════════════════ */
 .experience {
   background:
     radial-gradient(circle at 50% 40%, rgba(20, 34, 58, 0.5), transparent 38%),
     linear-gradient(180deg, #05070b 0%, var(--midnight) 58%, #070707 100%);
+  opacity: 0;
+  filter: blur(12px);
+  will-change: opacity, filter;
+}
+
+body.reveal-transitioning .experience {
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              filter 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body.reveal-active .experience {
+  opacity: 1;
+  filter: blur(0);
 }
 
 /* ═══════════════════════════════════════════
@@ -245,7 +326,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-inline: clamp(32px, 6vw, 140px);
+  padding-inline: clamp(40px, 8vw, 200px);
   /* Keeps elements beautifully flanking the central portrait */
 }
 
@@ -264,7 +345,7 @@ a {
 .name-left,
 .name-right {
   font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(48px, 6.8vw, 108px);
+  font-size: clamp(48px, 5.6vw, 86px);
   /* A refined size that doesn't dominate/block the central face */
   font-weight: 600;
   line-height: 0.75;
@@ -428,6 +509,11 @@ a {
 .portrait-base {
   z-index: 2;
   filter: contrast(1.04) saturate(0.92);
+  transition: filter 1.0s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+body.reveal-transitioning .portrait-base {
+  filter: contrast(1.065) saturate(0.92) brightness(1.05);
 }
 
 .portrait-reveal {
@@ -596,7 +682,7 @@ a {
   height: 1px;
   background: var(--gold);
   transform-origin: left center;
-  animation: breatheLine 2.8s ease-in-out infinite;
+  opacity: 0.6;
 }
 
 /* ═══════════════════════════════════════════
